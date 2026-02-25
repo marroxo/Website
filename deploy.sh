@@ -45,13 +45,13 @@ fi
 # ── 3. Restart (or start) via PM2 ───────────────────────────────────────────
 echo "  [3/3] Restarting PM2 process '$PM2_NAME'..."
 if pm2 describe "$PM2_NAME" > /dev/null 2>&1; then
-  pm2 restart "$PM2_NAME" --update-env
+  PORT=3001 pm2 restart "$PM2_NAME" --update-env
 else
-  pm2 start server.js --name "$PM2_NAME" -- --env production
+  PORT=3001 pm2 start server.js --name "$PM2_NAME"
   pm2 save
 fi
 
 echo ""
 echo "  ✓  Website updated and live!"
-echo "     http://45.11.229.217:3000"
+echo "     http://45.11.229.217:3001"
 echo ""
