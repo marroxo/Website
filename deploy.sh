@@ -38,8 +38,8 @@ if [ -d "$DIR/.git" ]; then
   echo "  [1/3] Pulling latest from origin..."
   cd "$DIR"
   git remote set-url origin "$AUTH_REPO"
-  git fetch --all -q
-  git reset --hard origin/main -q 2>/dev/null || git reset --hard origin/master -q
+  git fetch origin -q
+  git reset --hard origin/HEAD -q
   echo "        Done — repo is up to date."
 else
   echo "  [1/3] Cloning repo into $DIR..."
