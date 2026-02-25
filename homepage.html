@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TGModz — Premium Gaming Software Store | Est. 2021</title>
+<meta name="description" content="TGModz is an authorized digital software reseller trusted by 100,000+ gamers since 2021. Premium game enhancement tools for GTA V, FiveM, CS2, RDR2 and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg: #030303;
+  --bg2: #070707;
+  --surface: #0B0B0B;
+  --surface2: #111111;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.1);
+  --cyan: #F5A623;
+  --cyan-dim: rgba(245,166,35,0.12);
+  --cyan-glow: rgba(245,166,35,0.28);
+  --gold: #F5A623;
+  --gold-dim: rgba(245,166,35,0.1);
+  --green: #00D97E;
+  --green-dim: rgba(0,217,126,0.1);
+  --text: #EEF2F7;
+  --text2: #8A9BB0;
+  --text3: #4A5568;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* GRAIN OVERLAY */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.08;
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 2px; }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 4%;
+  background: rgba(6,8,11,0.88);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.7rem;
+  letter-spacing: 0.08em;
+  color: var(--text);
+  text-decoration: none;
+}
+.logo em { color: var(--cyan); font-style: normal; }
+
+.nav-center {
+  display: flex; gap: 2rem; list-style: none;
+}
+.nav-center a {
+  color: var(--text2); text-decoration: none;
+  font-size: 0.875rem; font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+.nav-center a:hover { color: var(--text); }
+
+.nav-right { display: flex; gap: 0.75rem; align-items: center; }
+
+.pill {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.45rem 1.1rem;
+  border-radius: 100px;
+  font-size: 0.82rem; font-weight: 600;
+  text-decoration: none; cursor: pointer; border: none;
+  transition: all 0.2s; font-family: 'Outfit', sans-serif;
+  letter-spacing: 0.02em;
+}
+.pill-ghost {
+  background: transparent; color: var(--text2);
+  border: 1px solid var(--border2);
+}
+.pill-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+.pill-cyan {
+  background: var(--cyan); color: #000;
+  box-shadow: 0 0 20px var(--cyan-glow);
+}
+.pill-cyan:hover {
+  box-shadow: 0 0 32px rgba(245,166,35,0.45);
+  transform: translateY(-1px);
+}
+
+/* ─── HERO ─── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 100px 4% 60px;
+  overflow: hidden;
+}
+
+/* Animated background */
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background: var(--bg);
+}
+
+.hero-beam {
+  position: absolute;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--cyan), transparent);
+  animation: beam 4s ease-in-out infinite;
+  opacity: 0.4;
+}
+.hero-beam:nth-child(1) { height: 300px; left: 20%; top: 10%; animation-delay: 0s; }
+.hero-beam:nth-child(2) { height: 200px; left: 45%; top: 30%; animation-delay: 1.5s; }
+.hero-beam:nth-child(3) { height: 250px; left: 70%; top: 5%; animation-delay: 0.8s; }
+.hero-beam:nth-child(4) { height: 180px; left: 85%; top: 40%; animation-delay: 2.2s; }
+
+@keyframes beam {
+  0%, 100% { opacity: 0; transform: scaleY(0.3); }
+  50% { opacity: 0.4; transform: scaleY(1); }
+}
+
+.hero-mesh {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 60% 40%, rgba(245,166,35,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 20% 70%, rgba(245,166,35,0.04) 0%, transparent 50%);
+}
+
+.hero-grid-lines {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(245,166,35,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,166,35,0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black, transparent);
+}
+
+.hero-inner {
+  position: relative; z-index: 1;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.hero-left {}
+
+.est-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text2);
+  margin-bottom: 1.5rem;
+  animation: slideIn 0.7s ease both;
+}
+.est-badge span { color: var(--gold); }
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 7vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: 0.04em;
+  margin-bottom: 1.5rem;
+  animation: slideIn 0.7s 0.1s ease both;
+}
+
+.hero h1 .accent {
+  display: block;
+  -webkit-text-stroke: 2px var(--cyan);
+  color: transparent;
+  letter-spacing: 0.06em;
+}
+
+.hero h1 .sub-accent {
+  display: block;
+  color: var(--cyan);
+  font-size: 0.6em;
+  letter-spacing: 0.12em;
+}
+
+.hero-desc {
+  font-size: 1rem;
+  color: var(--text2);
+  line-height: 1.75;
+  max-width: 460px;
+  margin-bottom: 2rem;
+  font-weight: 300;
+  animation: slideIn 0.7s 0.2s ease both;
+}
+
+.hero-ctas {
+  display: flex; gap: 0.875rem; flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+  animation: slideIn 0.7s 0.3s ease both;
+}
+
+.btn-main {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.8rem 1.8rem;
+  background: var(--cyan);
+  color: #000;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.2s;
+  box-shadow: 0 0 30px var(--cyan-glow), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.btn-main:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 50px rgba(245,166,35,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.btn-sec {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.8rem 1.8rem;
+  background: transparent;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-family: 'Outfit', sans-serif;
+  border: 1px solid var(--border2);
+  transition: all 0.2s;
+}
+.btn-sec:hover {
+  border-color: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.04);
+}
+
+.hero-metrics {
+  display: flex; gap: 2rem;
+  animation: slideIn 0.7s 0.4s ease both;
+}
+
+.metric { }
+.metric-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  line-height: 1;
+}
+.metric-num em { color: var(--cyan); font-style: normal; }
+.metric-label {
+  font-size: 0.72rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.2rem;
+}
+
+/* Hero right — product showcase */
+.hero-right {
+  animation: fadeUp 0.9s 0.3s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.showcase-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.showcase-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: 0.6;
+}
+
+.showcase-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.showcase-title {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text2);
+}
+
+.live-dot {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-size: 0.7rem; color: var(--green);
+  font-weight: 600; letter-spacing: 0.05em;
+}
+.live-dot::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+.product-rows { display: flex; flex-direction: column; gap: 10px; }
+
+.product-row {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.85rem 1rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+.product-row:hover {
+  border-color: rgba(245,166,35,0.2);
+  background: rgba(245,166,35,0.04);
+}
+
+.pr-icon {
+  width: 42px; height: 42px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  background: var(--surface);
+}
+
+.pr-info { flex: 1; min-width: 0; }
+.pr-name {
+  font-weight: 600; font-size: 0.9rem;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.pr-game {
+  font-size: 0.75rem; color: var(--text2); margin-top: 0.15rem;
+}
+
+.pr-right { text-align: right; flex-shrink: 0; }
+.pr-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem; letter-spacing: 0.04em;
+  color: var(--cyan);
+}
+.pr-tag {
+  display: inline-block;
+  padding: 0.1rem 0.4rem;
+  background: var(--green-dim);
+  color: var(--green);
+  font-size: 0.65rem; font-weight: 600;
+  border-radius: 3px; letter-spacing: 0.06em;
+  margin-top: 0.15rem;
+}
+
+.showcase-footer {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.sf-trust {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.75rem; color: var(--text2);
+}
+.sf-trust svg { color: var(--gold); }
+
+.sf-link {
+  font-size: 0.78rem; color: var(--cyan);
+  text-decoration: none; font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.sf-link:hover { text-decoration: underline; }
+
+/* ─── TRUST BAR ─── */
+.trust-bar {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 0 4%;
+  position: relative; z-index: 1;
+}
+
+.trust-inner {
+  max-width: 1300px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 0; gap: 0.5rem; flex-wrap: wrap;
+}
+
+.ti {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 0.8rem; color: var(--text2);
+}
+.ti strong { color: var(--text); font-weight: 600; }
+.ti-icon {
+  width: 26px; height: 26px;
+  background: var(--cyan-dim);
+  border-radius: 5px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; flex-shrink: 0;
+}
+.ti-sep { width: 1px; height: 20px; background: var(--border2); }
+
+/* ─── SECTIONS WRAPPER ─── */
+.section {
+  position: relative; z-index: 1;
+  padding: 80px 4%;
+}
+.section-inner { max-width: 1300px; margin: 0 auto; }
+
+.tag {
+  display: inline-block;
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 0.6rem;
+}
+
+.sh {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+}
+
+.sd {
+  color: var(--text2); font-size: 0.95rem;
+  font-weight: 300; line-height: 1.7;
+  max-width: 480px;
+}
+
+.section-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 2.5rem; gap: 1rem; flex-wrap: wrap;
+}
+
+/* ─── WHY US ─── */
+.why-bg { background: var(--bg2); }
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.why-card {
+  background: var(--surface);
+  padding: 2rem 1.75rem;
+  position: relative;
+  transition: background 0.2s;
+}
+.why-card:hover { background: var(--surface2); }
+
+.why-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.5rem;
+  color: rgba(245,166,35,0.08);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  position: absolute;
+  top: 1rem; right: 1.25rem;
+  user-select: none;
+}
+
+.why-icon {
+  width: 46px; height: 46px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+}
+
+.why-title {
+  font-weight: 700; font-size: 1rem;
+  margin-bottom: 0.5rem; letter-spacing: 0.01em;
+}
+.why-desc {
+  font-size: 0.85rem; color: var(--text2);
+  line-height: 1.65; font-weight: 300;
+}
+
+/* ─── CATEGORIES ─── */
+.cats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.cat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem 0.875rem;
+  text-align: center;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.2s;
+  display: block;
+}
+.cat:hover {
+  border-color: rgba(245,166,35,0.25);
+  background: var(--surface2);
+  transform: translateY(-3px);
+}
+.cat-em { font-size: 1.75rem; margin-bottom: 0.5rem; display: block; }
+.cat-n {
+  font-weight: 600; font-size: 0.8rem;
+  line-height: 1.3; color: var(--text);
+}
+.cat-c { font-size: 0.68rem; color: var(--text3); margin-top: 0.25rem; }
+
+/* ─── PRODUCTS ─── */
+.prods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.prod {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.25s;
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column;
+}
+.prod:hover {
+  border-color: rgba(245,166,35,0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+}
+
+.prod-thumb {
+  height: 120px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.75rem;
+  position: relative;
+  background: var(--surface2);
+}
+.prod-thumb::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, var(--surface) 100%);
+}
+
+.prod-badge {
+  position: absolute; top: 8px; left: 8px; z-index: 1;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.badge-hot { background: rgba(255,71,87,0.15); color: #FF4757; border: 1px solid rgba(255,71,87,0.25); }
+.badge-new { background: var(--cyan-dim); color: var(--cyan); border: 1px solid rgba(245,166,35,0.2); }
+.badge-sale { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(245,166,35,0.2); }
+
+.prod-body { padding: 0.875rem; flex: 1; display: flex; flex-direction: column; }
+.prod-game { font-size: 0.68rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem; }
+.prod-name { font-weight: 600; font-size: 0.9rem; line-height: 1.3; margin-bottom: auto; }
+.prod-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 0.875rem; padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+.prod-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem; letter-spacing: 0.04em; color: var(--cyan);
+}
+.prod-btn {
+  padding: 0.3rem 0.75rem;
+  background: var(--cyan); color: #000;
+  font-size: 0.72rem; font-weight: 700;
+  border-radius: 5px; letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: all 0.15s;
+  border: none; cursor: pointer; font-family: 'Outfit', sans-serif;
+}
+.prod-btn:hover { box-shadow: 0 0 16px var(--cyan-glow); }
+
+/* ─── STATS SECTION ─── */
+.stats-section {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+.stat-box {
+  padding: 2.5rem 2rem;
+  border-right: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.stat-box:last-child { border-right: none; }
+
+.stat-box::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.stat-box:hover::before { opacity: 1; }
+
+.stat-n {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem; letter-spacing: 0.04em;
+  line-height: 1; color: var(--text);
+  margin-bottom: 0.4rem;
+}
+.stat-n em { color: var(--cyan); font-style: normal; }
+.stat-l { font-size: 0.78rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; }
+.stat-sub { font-size: 0.72rem; color: var(--text3); margin-top: 0.2rem; }
+
+/* ─── REVIEWS ─── */
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.review {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  position: relative;
+}
+
+.review-stars { color: var(--gold); font-size: 0.8rem; margin-bottom: 0.75rem; letter-spacing: 0.1em; }
+.review-text {
+  font-size: 0.875rem; color: var(--text2);
+  line-height: 1.65; font-weight: 300;
+  margin-bottom: 1.25rem;
+  font-style: italic;
+}
+.review-author {
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.review-ava {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  flex-shrink: 0;
+}
+.review-name { font-weight: 600; font-size: 0.82rem; }
+.review-date { font-size: 0.7rem; color: var(--text3); }
+
+.trustpilot-cta {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1rem; margin-top: 2rem;
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.tp-logo { font-weight: 700; font-size: 0.9rem; }
+.tp-logo em { color: #00B67A; font-style: normal; }
+.tp-score {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem; color: #00B67A; letter-spacing: 0.05em;
+}
+.tp-link {
+  font-size: 0.8rem; color: var(--text2);
+  text-decoration: none;
+}
+.tp-link:hover { color: var(--text); }
+
+/* ─── FAQ ─── */
+.faq-bg { background: var(--bg2); }
+
+.faq-list { max-width: 760px; margin: 0 auto; }
+
+.faq-item {
+  border-bottom: 1px solid var(--border);
+}
+
+.faq-q {
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 0;
+  background: none; border: none;
+  color: var(--text); text-align: left;
+  font-size: 0.95rem; font-weight: 600;
+  cursor: pointer; font-family: 'Outfit', sans-serif;
+  gap: 1rem;
+  transition: color 0.2s;
+}
+.faq-q:hover { color: var(--cyan); }
+
+.faq-icon {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; flex-shrink: 0;
+  transition: all 0.2s;
+  color: var(--text2);
+}
+
+.faq-a {
+  font-size: 0.875rem; color: var(--text2);
+  line-height: 1.7; font-weight: 300;
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s;
+}
+
+.faq-item.open .faq-a {
+  max-height: 200px;
+  padding-bottom: 1.25rem;
+}
+
+.faq-item.open .faq-icon {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: var(--cyan-dim);
+}
+
+/* ─── RESELLER STRIP ─── */
+.reseller-strip {
+  background: linear-gradient(135deg, rgba(0,200,255,0.05), rgba(0,200,255,0.02));
+  border-top: 1px solid rgba(0,200,255,0.1);
+  border-bottom: 1px solid rgba(0,200,255,0.1);
+  padding: 1.5rem 4%;
+  position: relative; z-index: 1;
+}
+
+.reseller-inner {
+  max-width: 1300px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+}
+
+.reseller-text {
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.reseller-icon { font-size: 1.5rem; }
+.reseller-copy {}
+.reseller-copy strong {
+  display: block; font-size: 0.9rem; font-weight: 600;
+  color: var(--text); margin-bottom: 0.1rem;
+}
+.reseller-copy span { font-size: 0.8rem; color: var(--text2); }
+
+.reseller-badges {
+  display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;
+}
+.rbadge {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  font-size: 0.72rem; font-weight: 600;
+  color: var(--text2); letter-spacing: 0.04em;
+}
+.rbadge em { color: var(--green); font-style: normal; font-size: 0.9rem; }
+
+/* ─── DISCORD CTA ─── */
+.discord-section {
+  padding: 80px 4%;
+  position: relative; z-index: 1;
+}
+
+.discord-card {
+  max-width: 1300px; margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 2rem; flex-wrap: wrap;
+  position: relative; overflow: hidden;
+}
+
+.discord-card::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(88,101,242,0.12), transparent 70%);
+}
+
+.dc-left {}
+.dc-tag { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #7289DA; margin-bottom: 0.5rem; }
+.dc-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem; letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+.dc-desc { font-size: 0.9rem; color: var(--text2); font-weight: 300; line-height: 1.6; max-width: 440px; }
+
+.dc-right { display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-start; }
+
+.btn-discord {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.85rem 2rem;
+  background: #5865F2;
+  color: #fff;
+  font-weight: 700; font-size: 0.9rem;
+  border-radius: 8px; text-decoration: none;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.2s;
+  box-shadow: 0 0 24px rgba(88,101,242,0.3);
+}
+.btn-discord:hover {
+  background: #4752C4;
+  transform: translateY(-2px);
+  box-shadow: 0 0 36px rgba(88,101,242,0.45);
+}
+
+.dc-members { font-size: 0.78rem; color: var(--text3); }
+.dc-members strong { color: var(--text2); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 3rem 4% 1.5rem;
+  position: relative; z-index: 1;
+}
+
+.footer-inner {
+  max-width: 1300px; margin: 0 auto;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 2.5rem;
+}
+
+.footer-brand {}
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem; letter-spacing: 0.08em;
+  color: var(--text); text-decoration: none;
+  display: block; margin-bottom: 0.75rem;
+}
+.footer-logo em { color: var(--cyan); font-style: normal; }
+.footer-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.65; font-weight: 300; margin-bottom: 1rem; }
+.footer-disclaimer {
+  font-size: 0.72rem; color: var(--text3);
+  line-height: 1.6;
+  padding: 0.75rem;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.footer-col-title {
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text2); margin-bottom: 1rem;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.footer-col ul a {
+  font-size: 0.82rem; color: var(--text3);
+  text-decoration: none; transition: color 0.2s;
+}
+.footer-col ul a:hover { color: var(--cyan); }
+
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+}
+
+.footer-copy { font-size: 0.75rem; color: var(--text3); }
+.footer-legal {
+  display: flex; gap: 1.25rem;
+}
+.footer-legal a {
+  font-size: 0.75rem; color: var(--text3);
+  text-decoration: none; transition: color 0.2s;
+}
+.footer-legal a:hover { color: var(--text2); }
+
+
+/* ─── PAYMENT STRIP ─── */
+.payment-strip {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 0.9rem 4%;
+}
+
+.payment-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.payment-title {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text2);
+  font-weight: 600;
+}
+
+.payment-methods {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.pm {
+  padding: 0.35rem 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text2);
+  transition: all 0.2s;
+}
+
+.pm:hover {
+  border-color: rgba(245,166,35,0.3);
+  color: var(--text);
+}
+
+
+/* ─── ELITE: ANIMATED PAYMENT STRIP ─── */
+.payment-strip{
+  overflow:hidden;
+  position:relative;
+}
+.payment-inner{
+  gap:1.25rem;
+}
+.payment-title{
+  white-space:nowrap;
+}
+.payment-marquee{
+  position: relative;
+  flex: 1;
+  min-width: 260px;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+.payment-track{
+  display:flex;
+  width:max-content;
+  gap:0.6rem;
+  animation: payScroll 22s linear infinite;
+}
+.payment-strip:hover .payment-track{ animation-play-state: paused; }
+
+@keyframes payScroll{
+  from{ transform: translateX(0); }
+  to{ transform: translateX(-50%); }
+}
+
+.pm{
+  white-space:nowrap;
+  letter-spacing:0.04em;
+}
+.pm:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 0 14px rgba(245,166,35,0.25);
+}
+
+/* ─── ELITE: HERO TRUST LINE ─── */
+.hero-trust{
+  margin-top: 0.8rem;
+  font-size: 0.78rem;
+  color: var(--text2);
+  letter-spacing: 0.03em;
+}
+
+/* ─── ELITE: COMPLIANCE STRIP ─── */
+.compliance-strip{
+  display:flex;
+  justify-content:center;
+  gap:1.25rem;
+  flex-wrap:wrap;
+  padding:1rem 4%;
+  background: var(--bg2);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.compliance-strip span{
+  font-size:0.78rem;
+  color:var(--text2);
+}
+
+
+/* ─── MINIMAL BLACK & GOLD MODE ─── */
+.hero-right { display:none !important; }
+.hero-inner { grid-template-columns: 1fr !important; max-width: 900px; }
+.hero-desc { max-width: 620px; }
+.trust-inner { justify-content: center; }
+.ti-sep { display:none; }
+.stats-grid { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 640px){
+  .stats-grid { grid-template-columns: 1fr; }
+}
+
+
+/* ─── TRUSTPILOT PRO ANIMATION ─── */
+.trustpilot-cta{
+  position: relative;
+  overflow: hidden;
+  animation: tpFloatPro 5s ease-in-out infinite;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.trustpilot-cta::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background: linear-gradient(110deg,
+    transparent 0%,
+    rgba(245,166,35,0.08) 45%,
+    rgba(245,166,35,0.16) 50%,
+    rgba(245,166,35,0.08) 55%,
+    transparent 100%);
+  transform: translateX(-120%);
+  animation: tpShimmer 3.8s linear infinite;
+  pointer-events:none;
+}
+.trustpilot-cta:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 0 26px rgba(245,166,35,0.22);
+}
+.tp-score{
+  animation: tpGlowPro 2.8s ease-in-out infinite;
+}
+.review-stars{
+  animation: tpStars 2.4s ease-in-out infinite;
+}
+
+@keyframes tpFloatPro{
+  0%,100%{ transform: translateY(0); }
+  50%{ transform: translateY(-4px); }
+}
+@keyframes tpGlowPro{
+  0%,100%{ text-shadow: 0 0 0 rgba(245,166,35,0); }
+  50%{ text-shadow: 0 0 14px rgba(245,166,35,0.45); }
+}
+@keyframes tpStars{
+  0%,100%{ opacity: .9; }
+  50%{ opacity: 1; }
+}
+@keyframes tpShimmer{
+  0%{ transform: translateX(-120%); }
+  100%{ transform: translateX(120%); }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .why-grid { grid-template-columns: repeat(2, 1fr); }
+  .reviews-grid { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px) {
+  .nav-center { display: none; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .why-grid { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; }
+  .hero-metrics { gap: 1.25rem; }
+  .trust-inner { gap: 0.75rem; }
+  .ti-sep { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">TG<em>Modz</em></a>
+  <ul class="nav-center">
+    <li><a href="#">Shop</a></li>
+    <li><a href="#">GTA V</a></li>
+    <li><a href="#">FiveM</a></li>
+    <li><a href="#">CS2</a></li>
+    <li><a href="#">More</a></li>
+    <li><a href="#">Support</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#" class="pill pill-ghost">My Account</a>
+    <a href="#" class="pill pill-cyan">Shop Now →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-beam"></div>
+    <div class="hero-beam"></div>
+    <div class="hero-beam"></div>
+    <div class="hero-beam"></div>
+    <div class="hero-mesh"></div>
+    <div class="hero-grid-lines"></div>
+  </div>
+
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="est-badge">Est. <span>2021</span> &nbsp;·&nbsp; Trusted Digital Software Reseller</div>
+      <h1>
+        Premium
+        <span class="accent">Gaming</span>
+        <span class="sub-accent">Software Store</span>
+      </h1>
+      <p class="hero-desc">
+        Authorized reseller of top-tier game enhancement software for GTA V, FiveM, CS2, RDR2 and more. Instant digital delivery to your inbox — no waiting, no hassle.
+      </p>
+      <div class="hero-ctas">
+        <a href="#" class="btn-main">Browse Products →</a>
+        <a href="#" class="btn-sec">Join Discord</a>
+      </div>
+      <div class="hero-metrics">
+        <div class="metric">
+          <div class="metric-num">100<em>K+</em></div>
+          <div class="metric-label">Orders Delivered</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">4.8<em>★</em></div>
+          <div class="metric-label">Trustpilot Rating</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">4<em>yr</em></div>
+          <div class="metric-label">In Business</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">24<em>/7</em></div>
+          <div class="metric-label">Support</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="showcase-card">
+        <div class="showcase-header">
+          <div class="showcase-title">🔥 Popular Right Now</div>
+          <div class="live-dot">LIVE</div>
+        </div>
+        <div class="product-rows">
+          <a href="#" class="product-row">
+            <div class="pr-icon">🎮</div>
+            <div class="pr-info">
+              <div class="pr-name">Midnight CS2 Enhancement</div>
+              <div class="pr-game">Counter-Strike 2</div>
+            </div>
+            <div class="pr-right">
+              <div class="pr-price">$9.63</div>
+              <div class="pr-tag">INSTANT</div>
+            </div>
+          </a>
+          <a href="#" class="product-row">
+            <div class="pr-icon">🏙️</div>
+            <div class="pr-info">
+              <div class="pr-name">Susano FiveM Tool</div>
+              <div class="pr-game">FiveM / GTA V</div>
+            </div>
+            <div class="pr-right">
+              <div class="pr-price">$14.38</div>
+              <div class="pr-tag">INSTANT</div>
+            </div>
+          </a>
+          <a href="#" class="product-row">
+            <div class="pr-icon">🔴</div>
+            <div class="pr-info">
+              <div class="pr-name">Fortitude GTA V Software</div>
+              <div class="pr-game">Grand Theft Auto V</div>
+            </div>
+            <div class="pr-right">
+              <div class="pr-price">$19.99</div>
+              <div class="pr-tag">INSTANT</div>
+            </div>
+          </a>
+          <a href="#" class="product-row">
+            <div class="pr-icon">🏹</div>
+            <div class="pr-info">
+              <div class="pr-name">Lethal R6 Utility</div>
+              <div class="pr-game">Rainbow Six Siege</div>
+            </div>
+            <div class="pr-right">
+              <div class="pr-price">$12.00</div>
+              <div class="pr-tag">INSTANT</div>
+            </div>
+          </a>
+        </div>
+        <div class="showcase-footer">
+          <div class="sf-trust">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            SSL Secured · Instant Delivery
+          </div>
+          <a href="#" class="sf-link">View All Products →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-inner">
+    <div class="ti">
+      <div class="ti-icon">🔒</div>
+      <span><strong>SSL Secured</strong> Checkout</span>
+    </div>
+    <div class="ti-sep"></div>
+    <div class="ti">
+      <div class="ti-icon">⭐</div>
+      <span><strong>4.8/5</strong> on Trustpilot</span>
+    </div>
+    <div class="ti-sep"></div>
+    <div class="ti">
+      <div class="ti-icon">📦</div>
+      <span><strong>100,000+</strong> Orders Delivered</span>
+    </div>
+    <div class="ti-sep"></div>
+    <div class="ti">
+      <div class="ti-icon">⚡</div>
+      <span><strong>Instant</strong> Digital Delivery</span>
+    </div>
+    <div class="ti-sep"></div>
+    <div class="ti">
+      <div class="ti-icon">💬</div>
+      <span><strong>24/7</strong> Discord Support</span>
+    </div>
+    <div class="ti-sep"></div>
+    <div class="ti">
+      <div class="ti-icon">🏅</div>
+      <span><strong>Official</strong> Authorized Reseller</span>
+    </div>
+  </div>
+</div>
+
+<!-- PAYMENT METHODS STRIP -->
+<div class="payment-strip">
+  <div class="payment-inner">
+    <div class="payment-title">Secure Payments Accepted</div>
+    <div class="payment-marquee">
+      <div class="payment-track">
+        <div class="pm">VISA</div>
+        <div class="pm">MASTERCARD</div>
+        <div class="pm">AMEX</div>
+        <div class="pm">APPLE PAY</div>
+        <div class="pm">GOOGLE PAY</div>
+        <div class="pm">CRYPTO</div>
+        <div class="pm">SSL ENCRYPTED</div>
+        <div class="pm">3D SECURE</div>
+        <div class="pm">PCI READY</div>
+
+        <div class="pm">VISA</div>
+        <div class="pm">MASTERCARD</div>
+        <div class="pm">AMEX</div>
+        <div class="pm">APPLE PAY</div>
+        <div class="pm">GOOGLE PAY</div>
+        <div class="pm">CRYPTO</div>
+        <div class="pm">SSL ENCRYPTED</div>
+        <div class="pm">3D SECURE</div>
+        <div class="pm">PCI READY</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY US -->
+<section class="section why-bg">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="tag">Why TGModz</div>
+        <div class="sh">Trusted Since 2021</div>
+        <div class="sd">Over 4 years of serving the gaming community with verified, officially licensed digital software.</div>
+      </div>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-num">01</div>
+        <div class="why-icon">🏆</div>
+        <div class="why-title">Officially Authorized Reseller</div>
+        <div class="why-desc">Every product is sold with direct developer authorization. Verify our certified reseller status in each product's official Discord server.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-num">02</div>
+        <div class="why-icon">⚡</div>
+        <div class="why-title">Instant License Delivery</div>
+        <div class="why-desc">License keys and setup instructions hit your inbox the moment payment clears. Automated, reliable, zero waiting time.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-num">03</div>
+        <div class="why-icon">🔒</div>
+        <div class="why-title">Secure Payment Processing</div>
+        <div class="why-desc">All transactions are SSL encrypted and handled by industry-standard payment processors. Your card details are never stored on our servers.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-num">04</div>
+        <div class="why-icon">💰</div>
+        <div class="why-title">Best Market Prices</div>
+        <div class="why-desc">We negotiate directly with developers to bring you the sharpest prices available anywhere. You get maximum value, guaranteed.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-num">05</div>
+        <div class="why-icon">💬</div>
+        <div class="why-title">24/7 Expert Support</div>
+        <div class="why-desc">Our team is always live on Discord. Whether it's a pre-sale question or post-purchase help, someone's there around the clock.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-num">06</div>
+        <div class="why-icon">🛡️</div>
+        <div class="why-title">Transparent Refund Policy</div>
+        <div class="why-desc">We stand behind what we sell. Our fair refund policy is clearly published and our support team resolves issues fast.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-section section">
+  <div class="section-inner">
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-n">100<em>K+</em></div>
+        <div class="stat-l">Orders Processed</div>
+        <div class="stat-sub">Since 2021</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-n">4.8<em>★</em></div>
+        <div class="stat-l">Trustpilot Rating</div>
+        <div class="stat-sub">Hundreds of verified reviews</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-n">4<em>yr</em></div>
+        <div class="stat-l">Years in Business</div>
+        <div class="stat-sub">Est. 2021 · Still growing</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-n">50<em>+</em></div>
+        <div class="stat-l">Products Stocked</div>
+        <div class="stat-sub">Across 15+ game titles</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BEST SELLERS -->
+<section class="section" style="background: var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="tag">Most Popular</div>
+        <div class="sh">Best Sellers</div>
+        <div class="sd">Our most purchased products — tried, tested and loved by thousands.</div>
+      </div>
+      <a href="#" class="btn-sec" style="border-radius:6px; padding:0.6rem 1.25rem; font-size:0.82rem;">View All →</a>
+    </div>
+    <div class="prods-grid">
+      <a href="#" class="prod">
+        <div class="prod-thumb" style="background: linear-gradient(135deg,#0d1a2a,#0a1520);">
+          🎯
+          <div class="prod-badge badge-hot">HOT</div>
+        </div>
+        <div class="prod-body">
+          <div class="prod-game">Counter-Strike 2</div>
+          <div class="prod-name">Midnight CS2 Enhancement Software</div>
+          <div class="prod-foot">
+            <div class="prod-price">$9.63</div>
+            <button class="prod-btn">Add to Cart</button>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="prod">
+        <div class="prod-thumb" style="background: linear-gradient(135deg,#0d1a12,#081208);">
+          🏙️
+          <div class="prod-badge badge-new">NEW</div>
+        </div>
+        <div class="prod-body">
+          <div class="prod-game">FiveM / GTA V</div>
+          <div class="prod-name">Susano FiveM Enhancement Tool</div>
+          <div class="prod-foot">
+            <div class="prod-price">$14.38</div>
+            <button class="prod-btn">Add to Cart</button>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="prod">
+        <div class="prod-thumb" style="background: linear-gradient(135deg,#1a0d10,#120508);">
+          🔴
+          <div class="prod-badge badge-hot">HOT</div>
+        </div>
+        <div class="prod-body">
+          <div class="prod-game">FiveM</div>
+          <div class="prod-name">redEngine FiveM LUA Executor</div>
+          <div class="prod-foot">
+            <div class="prod-price">$11.93</div>
+            <button class="prod-btn">Add to Cart</button>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="prod">
+        <div class="prod-thumb" style="background: linear-gradient(135deg,#12100d,#0a0805);">
+          🏹
+          <div class="prod-badge badge-sale">SALE</div>
+        </div>
+        <div class="prod-body">
+          <div class="prod-game">Rainbow Six Siege</div>
+          <div class="prod-name">Lethal R6 Siege Utility</div>
+          <div class="prod-foot">
+            <div class="prod-price">$12.00</div>
+            <button class="prod-btn">Add to Cart</button>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="prod">
+        <div class="prod-thumb" style="background: linear-gradient(135deg,#0d1520,#080f18);">
+          🌐
+          <div class="prod-badge badge-new">NEW</div>
+        </div>
+        <div class="prod-body">
+          <div class="prod-game">Counter-Strike 2</div>
+          <div class="prod-name">Neverlose CS2 Software</div>
+          <div class="prod-foot">
+            <div class="prod-price">$18.50</div>
+            <button class="prod-btn">Add to Cart</button>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="prod">
+        <div class="prod-thumb" style="background: linear-gradient(135deg,#1a1a0d,#121208);">
+          🤠
+          <div class="prod-badge badge-hot">HOT</div>
+        </div>
+        <div class="prod-body">
+          <div class="prod-game">Red Dead Redemption 2</div>
+          <div class="prod-name">Fortitude RDR2 Mod Tool</div>
+          <div class="prod-foot">
+            <div class="prod-price">$22.00</div>
+            <button class="prod-btn">Add to Cart</button>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- RESELLER STRIP -->
+<div class="reseller-strip">
+  <div class="reseller-inner">
+    <div class="reseller-text">
+      <div class="reseller-icon">🏅</div>
+      <div class="reseller-copy">
+        <strong>Official Authorized Digital Software Reseller</strong>
+        <span>TGModz sells all products with full developer authorization — verifiable in each product's official Discord server</span>
+      </div>
+    </div>
+    <div class="reseller-badges">
+      <div class="rbadge"><em>✓</em> Developer Verified</div>
+      <div class="rbadge"><em>✓</em> SSL Encrypted</div>
+      <div class="rbadge"><em>✓</em> Est. 2021</div>
+      <div class="rbadge"><em>✓</em> 100K+ Orders</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- MINIMAL TRUSTPILOT -->
+<section class="section">
+  <div class="section-inner">
+    <div class="trustpilot-cta">
+      <span class="tp-logo"><em>★</em> Trustpilot</span>
+      <span class="tp-score">4.8 / 5.0</span>
+      <span style="color:var(--text3); font-size:0.8rem;">
+        Based on verified customer reviews
+      </span>
+      <a href="#" class="tp-link">Read Reviews →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq-bg">
+  <div class="section-inner">
+    <div style="text-align:center; margin-bottom:2.5rem;">
+      <div class="tag">FAQ</div>
+      <div class="sh">Common Questions</div>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item open">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What happens after I complete my purchase?
+          <div class="faq-icon">−</div>
+        </button>
+        <div class="faq-a">Your license key and full setup instructions are automatically sent to your email address the moment payment is confirmed. Everything you need is included — no manual steps on our end required.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What payment methods do you accept?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">We accept all major debit and credit cards, as well as cryptocurrency directly on-site. PayPal and CashApp are also available through our Discord server for customers who prefer those options.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How do I know TGModz is legitimate?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">We have been operating since 2021 and have processed over 100,000 successful orders. We are an officially authorized reseller — you can verify our certified partner status directly in each product's developer Discord server. We also maintain a 4.8-star rating on Trustpilot.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Are the products lifetime or subscription-based?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">Both options are available depending on the product. Each product page clearly states whether it is lifetime or subscription-based (weekly, monthly etc.). If no duration is specified, the license is lifetime.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Can I get a refund?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">Refund eligibility depends on the product and circumstances. Non-delivered keys, wrong products delivered, and non-functional software are all eligible. Please review our full Refund Policy or contact our Discord support team who will resolve issues quickly.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What if I need help after purchasing?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">Join our Discord server where our team provides 24/7 support. For most products, you can also contact the developer's own support team directly — we'll point you in the right direction when you receive your license.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISCORD CTA -->
+<div class="discord-section">
+  <div class="discord-card">
+    <div class="dc-left">
+      <div class="dc-tag">Community</div>
+      <div class="dc-title">Join Our Discord Server</div>
+      <div class="dc-desc">24/7 order support, product advice, exclusive discounts and regular giveaways — all in one place. Thousands of gamers already inside.</div>
+    </div>
+    <div class="dc-right">
+      <a href="#" class="btn-discord">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.03.053a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+        Join Discord
+      </a>
+      <div class="dc-members">Free to join · <strong>Active 24/7</strong> · Giveaways & Deals</div>
+    </div>
+  </div>
+</div>
+
+<!-- ELITE COMPLIANCE STRIP -->
+<div class="compliance-strip">
+  <span>🔒 Secure 3D Checkout</span>
+  <span>💳 PCI-Compliant Payments</span>
+  <span>🏅 Trusted by 100,000+ Customers</span>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="footer-logo">TG<em>Modz</em></a>
+        <div class="footer-desc">TGModz has been serving the gaming community since 2021. We are an independent, authorized digital software reseller partnered with verified game tool developers worldwide.</div>
+        <div class="footer-disclaimer">TGModz is an independent authorized digital software reseller. All software licenses are sold with developer consent and verified through official channels. All trademarks and game titles belong to their respective owners.</div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Shop</div>
+        <ul>
+          <li><a href="#">GTA V Tools</a></li>
+          <li><a href="#">FiveM Tools</a></li>
+          <li><a href="#">CS2 Software</a></li>
+          <li><a href="#">RDR2 Tools</a></li>
+          <li><a href="#">Rainbow Six</a></li>
+          <li><a href="#">All Products</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Affiliates</a></li>
+          <li><a href="#">Discord</a></li>
+          <li><a href="#">Trustpilot Reviews</a></li>
+          <li><a href="#">My Account</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Legal</div>
+        <ul>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Refund Policy</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2021–2026 TGModz. All rights reserved. Est. 2021.</div>
+      <div class="footer-legal">
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+        <a href="#">Refunds</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// FAQ accordion
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const icon = btn.querySelector('.faq-icon');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.faq-icon').textContent = '+';
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    icon.textContent = '−';
+  }
+}
+
+// Animated counters
+function animateCounters() {
+  const counters = document.querySelectorAll('.metric-num, .stat-n');
+  counters.forEach(el => {
+    const text = el.innerHTML;
+    el.style.opacity = '1';
+  });
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.why-card, .prod, .review, .cat, .stat-box').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(16px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+
+// Trustpilot score count-up (PRO)
+(function(){
+  const el = document.querySelector('.tp-score');
+  if(!el) return;
+  const target = 4.8;
+  let shown = 0.0;
+  const step = 0.06;
+  function tick(){
+    shown = Math.min(target, shown + step);
+    el.textContent = shown.toFixed(1) + ' / 5.0';
+    if(shown < target){
+      requestAnimationFrame(tick);
+    }
+  }
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        tick();
+        io.disconnect();
+      }
+    });
+  }, {threshold:0.4});
+  io.observe(el);
+})();
+
+</script>
+</body>
+</html>
