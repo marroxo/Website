@@ -11,11 +11,49 @@ set -e
 REPO="https://github.com/marroxo/Website.git"
 DIR="$HOME/w"
 PM2_NAME="tgmodz"
+TOKEN_FILE="$HOME/.tgmodz_token"
 
 echo ""
 echo "  ╔══════════════════════════════╗"
 echo "  ║   TGModz — Deploy Script     ║"
 echo "  ╚══════════════════════════════╝"
+echo ""
+
+# ── AUTH ─────────────────────────────────────────────────────────────────────
+if [ ! -f "$TOKEN_FILE" ]; then
+  # First run — set a token
+  echo "  [SETUP] No deploy token found. Create one now."
+  echo ""
+  while true; do
+    read -rsp "  Set token: " t1; echo
+    read -rsp "  Confirm:   " t2; echo
+    if [ "$t1" = "$t2" ] && [ -n "$t1" ]; then
+      printf '%s' "$t1" | sha256sum | awk '{print $1}' > "$TOKEN_FILE"
+      chmod 600 "$TOKEN_FILE"
+      echo ""
+      echo "  Token saved to $TOKEN_FILE"
+      echo "  Run the script again to deploy."
+      echo ""
+      exit 0
+    else
+      echo "  Tokens don't match or are empty — try again."
+    fi
+  done
+fi
+
+# Verify token on every run
+read -rsp "  Deploy token: " entered; echo
+entered_hash=$(printf '%s' "$entered" | sha256sum | awk '{print $1}')
+stored_hash=$(cat "$TOKEN_FILE")
+
+if [ "$entered_hash" != "$stored_hash" ]; then
+  echo ""
+  echo "  ✗  Invalid token. Access denied."
+  echo ""
+  exit 1
+fi
+
+echo "  ✓  Authenticated."
 echo ""
 
 # ── 1. Pull or clone into ~/w ────────────────────────────────────────────────
