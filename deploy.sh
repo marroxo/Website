@@ -11,7 +11,6 @@ set -e
 REPO="https://github.com/marroxo/Website.git"
 DIR="$HOME/w"
 PM2_NAME="tgmodz"
-TOKEN_FILE="$HOME/.tgmodz_token"
 GH_TOKEN_FILE="$HOME/.tgmodz_ghtoken"
 
 echo ""
@@ -20,56 +19,16 @@ echo "  ║   TGModz — Deploy Script     ║"
 echo "  ╚══════════════════════════════╝"
 echo ""
 
-# ── AUTH ─────────────────────────────────────────────────────────────────────
-if [ ! -f "$TOKEN_FILE" ] || [ ! -f "$GH_TOKEN_FILE" ]; then
-  echo "  [SETUP] First-time setup."
-  echo ""
-
-  if [ ! -f "$TOKEN_FILE" ]; then
-    echo "  Create a deploy token (used to protect this script):"
-    while true; do
-      read -rsp "  Set token: " t1; echo
-      read -rsp "  Confirm:   " t2; echo
-      if [ "$t1" = "$t2" ] && [ -n "$t1" ]; then
-        printf '%s' "$t1" | sha256sum | awk '{print $1}' > "$TOKEN_FILE"
-        chmod 600 "$TOKEN_FILE"
-        echo "  Deploy token saved."
-        echo ""
-        break
-      else
-        echo "  Tokens don't match or are empty — try again."
-      fi
-    done
-  fi
-
-  if [ ! -f "$GH_TOKEN_FILE" ]; then
-    echo "  Enter your GitHub personal access token (repo read access):"
-    read -rsp "  GitHub token: " gh_tok; echo
-    printf '%s' "$gh_tok" > "$GH_TOKEN_FILE"
-    chmod 600 "$GH_TOKEN_FILE"
-    echo "  GitHub token saved."
-    echo ""
-  fi
-
-  echo "  Setup complete. Run the script again to deploy."
+# ── GitHub token ─────────────────────────────────────────────────────────────
+if [ ! -f "$GH_TOKEN_FILE" ]; then
+  echo "  [SETUP] Enter your GitHub personal access token (repo read access):"
+  read -rsp "  GitHub token: " gh_tok; echo
+  printf '%s' "$gh_tok" > "$GH_TOKEN_FILE"
+  chmod 600 "$GH_TOKEN_FILE"
+  echo "  Token saved. Run the script again to deploy."
   echo ""
   exit 0
 fi
-
-# Verify token on every run
-read -rsp "  Deploy token: " entered; echo
-entered_hash=$(printf '%s' "$entered" | sha256sum | awk '{print $1}')
-stored_hash=$(cat "$TOKEN_FILE")
-
-if [ "$entered_hash" != "$stored_hash" ]; then
-  echo ""
-  echo "  ✗  Invalid token. Access denied."
-  echo ""
-  exit 1
-fi
-
-echo "  ✓  Authenticated."
-echo ""
 
 GH_TOKEN=$(cat "$GH_TOKEN_FILE")
 AUTH_REPO="https://${GH_TOKEN}@github.com/marroxo/Website.git"
