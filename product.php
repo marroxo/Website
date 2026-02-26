@@ -30,8 +30,14 @@ include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/nav.php';
 ?>
 
+<!-- ─── PAGE AMBIENT BACKGROUND ──────────────────────────────────────────── -->
+<div style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;">
+  <div class="hero-orb hero-orb-a" style="width:600px;height:600px;top:-150px;left:-100px;opacity:.15;filter:blur(120px);"></div>
+  <div class="hero-orb hero-orb-b" style="width:500px;height:500px;top:200px;right:-100px;opacity:.12;filter:blur(120px);"></div>
+</div>
+
 <!-- ─── BREADCRUMB ────────────────────────────────────────────────────────── -->
-<div style="padding:1.25rem 5%;max-width:1280px;margin:0 auto;">
+<div style="position:relative;z-index:1;padding:1.25rem 5%;max-width:1280px;margin:0 auto;">
   <div class="prod-detail-breadcrumb">
     <a href="/">Home</a>
     <span>/</span>
@@ -42,7 +48,7 @@ include __DIR__ . '/includes/nav.php';
 </div>
 
 <!-- ─── PRODUCT HERO ──────────────────────────────────────────────────────── -->
-<div style="padding:0 5% 3rem;max-width:1280px;margin:0 auto;">
+<div style="position:relative;z-index:1;padding:0 5% 3rem;max-width:1280px;margin:0 auto;">
   <div class="prod-detail-hero" style="padding:0;">
     <!-- Image -->
     <div class="prod-detail-img">
@@ -105,18 +111,18 @@ include __DIR__ . '/includes/nav.php';
       </div>
 
       <!-- Trust mini bar -->
-      <div style="display:flex;gap:1rem;flex-wrap:wrap;padding:1rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);">
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;padding:1rem 1.25rem;background:var(--glass-bg);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--glass-border);border-radius:var(--radius);box-shadow:0 4px 24px rgba(0,0,0,.3);">
         <div style="display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--text2);">
-          <span style="color:var(--green);">⚡</span> Instant delivery
+          <span style="color:var(--green);">⚡</span> <strong style="color:var(--text);">Instant</strong>&nbsp;delivery
         </div>
         <div style="display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--text2);">
-          <span style="color:var(--blue-hi);">🔒</span> Secure payment
+          <span style="color:var(--blue-hi);">🔒</span> <strong style="color:var(--text);">Secure</strong>&nbsp;payment
         </div>
         <div style="display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--text2);">
-          <span style="color:var(--gold);">💬</span> 24/7 support
+          <span style="color:var(--gold);">💬</span> <strong style="color:var(--text);">24/7</strong>&nbsp;support
         </div>
         <div style="display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--text2);">
-          <span style="color:var(--green);">✅</span> Authorized seller
+          <span style="color:var(--green);">✅</span> <strong style="color:var(--text);">Authorized</strong>&nbsp;seller
         </div>
       </div>
     </div>
@@ -126,7 +132,7 @@ include __DIR__ . '/includes/nav.php';
 <div class="glow-line" style="margin:0;"></div>
 
 <!-- ─── FEATURES + PLANS ──────────────────────────────────────────────────── -->
-<div style="max-width:1280px;margin:0 auto;padding:3rem 5%;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;" class="prod-features-layout">
+<div style="position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:3rem 5%;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;" class="prod-features-layout">
 
   <!-- Features -->
   <div class="reveal">
@@ -175,7 +181,7 @@ $others = array_filter($products, fn($prod) => $prod['slug'] !== $slug);
 if (!empty($others)):
 ?>
 <div class="glow-line" style="margin:0;"></div>
-<section class="section">
+<section class="section section-glow" style="position:relative;z-index:1;">
   <div class="section-inner">
     <div class="section-header reveal">
       <div>

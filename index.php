@@ -125,7 +125,7 @@ include __DIR__ . '/includes/nav.php';
 </div>
 
 <!-- ─── FEATURE HIGHLIGHTS ────────────────────────────────────────────────── -->
-<section class="section" style="padding-top:72px;padding-bottom:60px;">
+<section class="section section-glow" style="padding-top:72px;padding-bottom:60px;">
   <div class="section-inner">
     <div class="section-header reveal">
       <div>
@@ -179,7 +179,7 @@ include __DIR__ . '/includes/nav.php';
 <div class="glow-line"></div>
 
 <!-- ─── FEATURED PRODUCTS ─────────────────────────────────────────────────── -->
-<section class="section">
+<section class="section section-glow">
   <div class="section-inner">
     <div class="section-header reveal">
       <div>

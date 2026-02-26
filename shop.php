@@ -29,11 +29,16 @@ include __DIR__ . '/includes/nav.php';
 <!-- ─── PAGE HERO ─────────────────────────────────────────────────────────── -->
 <section class="shop-hero">
   <div class="shop-hero-bg"></div>
+  <!-- Glow orbs -->
+  <div class="hero-orb hero-orb-a" style="width:380px;height:380px;top:-80px;left:-60px;filter:blur(90px);animation-duration:16s;"></div>
+  <div class="hero-orb hero-orb-b" style="width:300px;height:300px;top:20px;right:-40px;filter:blur(80px);animation-duration:20s;"></div>
+  <div class="hero-scan"></div>
+
   <div style="position:relative;z-index:1;">
     <div class="tag">TGModz Store</div>
     <h1 class="heading" style="font-size:clamp(2.5rem,7vw,5rem);margin-bottom:.75rem;">THE SHOP</h1>
     <p class="subtext" style="max-width:520px;margin:0 auto 0;">
-      <?= count($all) ?> premium products · instant delivery · always undetected
+      <?= count($all) ?> premium products · instant delivery · always verified
     </p>
 
     <!-- Filters -->
@@ -56,7 +61,7 @@ include __DIR__ . '/includes/nav.php';
 <div class="glow-line"></div>
 
 <!-- ─── PRODUCTS GRID ─────────────────────────────────────────────────────── -->
-<div class="shop-grid-wrap">
+<div class="shop-grid-wrap section-glow">
   <div class="shop-grid-inner">
 
     <?php if (empty($filtered)): ?>
