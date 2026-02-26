@@ -1,289 +1,220 @@
 <?php
-/**
- * Product detail page — shows product info + variation selector + Add to Cart
- * URL: /product/{slug}
- */
+$products = require __DIR__ . '/data/products.php';
 
-require_once __DIR__ . '/config/db.php';
+// Resolve slug from URL: /product/{slug}
+$uri  = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$slug = basename(rtrim($uri, '/'));
 
-$uri  = ltrim(parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH), '/');
-$slug = preg_replace('#^product/#', '', $uri);
-
-$product = db_row("
-    SELECT p.*, c.name AS cat_name, c.slug AS cat_slug, c.icon AS cat_icon, c.color AS cat_color
-    FROM products p
-    LEFT JOIN categories c ON c.id = p.category_id
-    WHERE p.slug = ? AND p.is_active = 1
-    LIMIT 1
-", [$slug]);
-
-if (!$product) {
-    http_response_code(404);
-    $page_title  = '404 — Product Not Found — TGModz';
-    $page_desc   = '';
-    $active_page = 'home';
-    require __DIR__ . '/includes/head.php';
-    ?>
-    <body>
-    <?php require __DIR__ . '/includes/nav.php'; ?>
-    <section style="padding:160px 0 80px;text-align:center">
-      <div class="container">
-        <div class="sh" style="font-size:2.5rem;margin-bottom:12px">Product Not Found</div>
-        <p style="color:var(--text2);margin-bottom:32px">This product doesn't exist or has been removed.</p>
-        <a href="/" class="btn-primary">Back to Shop</a>
-      </div>
-    </section>
-    <?php require __DIR__ . '/includes/footer.php'; ?>
-    </body>
-    <?php exit;
+// Fallback to query string for dev/testing: /product.php?slug=neverlose-cs2
+if (!isset($products[$slug]) && isset($_GET['slug'])) {
+    $slug = preg_replace('/[^a-z0-9\-]/', '', strtolower($_GET['slug']));
 }
 
-// Load variations
-$variations = db_rows(
-    "SELECT * FROM product_variations WHERE product_id = ? ORDER BY sort_order, price",
-    [$product['id']]
-);
+if (!isset($products[$slug])) {
+    header('Location: /shop');
+    exit;
+}
 
-$accent = $product['cat_color'] ?? '#3b82f6';
+$p = $products[$slug];
 
-$page_title  = $product['name'] . ' — TGModz';
-$page_desc   = $product['short_description']
-    ? strip_tags(substr($product['short_description'], 0, 160))
-    : 'Buy ' . $product['name'] . ' at TGModz. Authorized reseller, instant delivery.';
-$active_page = $product['cat_slug'] ?? 'home';
-$extra_css   = "
-:root{--accent:{$accent};}
-.accent-btn{background:var(--accent);color:#fff;padding:1rem 2rem;border-radius:8px;font-weight:700;font-size:1rem;display:inline-flex;align-items:center;gap:10px;transition:all 0.25s;border:none;cursor:pointer;letter-spacing:0.04em;text-transform:uppercase;font-family:'Outfit',sans-serif;width:100%;justify-content:center;box-shadow:0 4px 24px {$accent}44;}
-.accent-btn:hover{filter:brightness(1.1);transform:translateY(-2px);box-shadow:0 8px 36px {$accent}55;}
-.accent-btn:disabled{opacity:0.45;cursor:not-allowed;transform:none;box-shadow:none;}
-.var-option{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--surface2);margin-bottom:10px;gap:12px;}
-.var-option:hover{border-color:{$accent}88;background:var(--surface);}
-.var-option.selected{border-color:{$accent};background:{$accent}12;}
-.var-option.out-stock{opacity:0.45;cursor:not-allowed;}
-.var-name{font-weight:600;font-size:0.95rem;}
-.var-price{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:0.04em;color:{$accent};flex-shrink:0;}
-.var-sale{text-decoration:line-through;color:var(--text3);font-size:0.8rem;margin-left:6px;font-weight:400;font-family:'Outfit',sans-serif;}
-.var-badge{font-size:0.62rem;font-weight:700;text-transform:uppercase;padding:2px 7px;border-radius:4px;margin-left:8px;background:var(--red-dim);color:var(--red);border:1px solid rgba(239,68,68,0.25);}
-.pd-simple-price{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:0.04em;color:{$accent};line-height:1;}
-.pd-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3rem);letter-spacing:0.04em;line-height:1;margin-bottom:1rem;}
-";
+$page_title  = $p['name'] . ' — TGModz';
+$page_desc   = $p['description'];
+$active_page = 'shop';
 
-require __DIR__ . '/includes/head.php';
+// Savings %
+$savings = $p['price_orig'] > 0
+    ? round((($p['price_orig'] - $p['price_from']) / $p['price_orig']) * 100)
+    : 0;
+
+include __DIR__ . '/includes/head.php';
+include __DIR__ . '/includes/nav.php';
 ?>
-<body>
-<?php require __DIR__ . '/includes/nav.php'; ?>
 
-<section style="padding:100px 4% 80px;">
-  <div style="max-width:1100px;margin:0 auto;">
+<!-- ─── BREADCRUMB ────────────────────────────────────────────────────────── -->
+<div style="padding:1.25rem 5%;max-width:1280px;margin:0 auto;">
+  <div class="prod-detail-breadcrumb">
+    <a href="/">Home</a>
+    <span>/</span>
+    <a href="/shop">Shop</a>
+    <span>/</span>
+    <span style="color:var(--text2);"><?= htmlspecialchars($p['name']) ?></span>
+  </div>
+</div>
 
-    <!-- Breadcrumb -->
-    <div style="font-size:0.82rem;color:var(--text3);display:flex;align-items:center;gap:8px;margin-bottom:2rem;">
-      <a href="/" style="color:var(--text3);transition:color 0.2s;" onmouseover="this.style.color='var(--blue-hi)'" onmouseout="this.style.color='var(--text3)'">TGModz</a>
-      <span>›</span>
-      <?php if ($product['cat_slug']): ?>
-        <a href="/<?= htmlspecialchars($product['cat_slug']) ?>" style="color:var(--text3);transition:color 0.2s;" onmouseover="this.style.color='var(--blue-hi)'" onmouseout="this.style.color='var(--text3)'"><?= htmlspecialchars($product['cat_name']) ?></a>
-        <span>›</span>
+<!-- ─── PRODUCT HERO ──────────────────────────────────────────────────────── -->
+<div style="padding:0 5% 3rem;max-width:1280px;margin:0 auto;">
+  <div class="prod-detail-hero" style="padding:0;">
+    <!-- Image -->
+    <div class="prod-detail-img">
+      <?php if (!empty($p['image_url'])): ?>
+        <img src="<?= htmlspecialchars($p['image_url']) ?>" alt="<?= htmlspecialchars($p['name']) ?>">
+      <?php else: ?>
+        <div class="prod-detail-img-placeholder"
+             style="background:linear-gradient(135deg,<?= $p['game_color'] ?>22,<?= $p['game_color'] ?>06);">
+          <span style="position:relative;z-index:1;"><?= $p['game_icon'] ?></span>
+        </div>
       <?php endif; ?>
-      <span style="color:var(--text2);"><?= htmlspecialchars($product['name']) ?></span>
     </div>
 
-    <div class="product-detail-grid">
-
-      <!-- LEFT: Image + Trust -->
-      <div class="pd-media">
-        <div style="background:var(--surface2);border:1px solid var(--border2);border-radius:16px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:1.25rem;position:relative;">
-          <?php if (!empty($product['image_url'])): ?>
-            <img src="<?= htmlspecialchars($product['image_url']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" style="width:100%;height:100%;object-fit:cover;">
-          <?php else: ?>
-            <div style="text-align:center;">
-              <div style="font-size:5rem;opacity:0.7;"><?= $product['cat_icon'] ?? '🎮' ?></div>
-              <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.1em;color:var(--text3);margin-top:0.5rem;"><?= htmlspecialchars($product['cat_name'] ?? '') ?></div>
-            </div>
-          <?php endif; ?>
-          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,<?= $accent ?>,transparent);opacity:0.6;"></div>
-        </div>
-
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <?php foreach (['⚡ Instant Email Delivery', '🏅 Developer Authorized', '💬 24/7 Discord Support', '🛡️ Buyer Protection Included'] as $ti): ?>
-            <div style="display:flex;align-items:center;gap:10px;font-size:0.82rem;color:var(--text2);padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;"><?= $ti ?></div>
-          <?php endforeach; ?>
-        </div>
+    <!-- Meta -->
+    <div class="prod-detail-meta">
+      <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;flex-wrap:wrap;">
+        <span class="badge <?= $p['badge_class'] ?>"><?= $p['badge'] ?></span>
+        <span style="font-size:.7rem;background:var(--blue-dim);border:1px solid var(--border2);color:var(--blue-hi);padding:2px 8px;border-radius:3px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;"><?= htmlspecialchars($p['category']) ?></span>
+        <?php if ($savings > 0): ?>
+        <span style="font-size:.7rem;background:var(--gold-dim);border:1px solid rgba(245,158,11,.25);color:var(--gold);padding:2px 8px;border-radius:3px;font-weight:700;">SAVE <?= $savings ?>%</span>
+        <?php endif; ?>
       </div>
 
-      <!-- RIGHT: Info + Buy -->
-      <div class="pd-info">
+      <div class="prod-detail-game"><?= htmlspecialchars($p['game']) ?></div>
+      <h1 class="prod-detail-name"><?= htmlspecialchars($p['name']) ?></h1>
+      <div class="prod-detail-tagline"><?= htmlspecialchars($p['tagline']) ?></div>
+      <p class="prod-detail-desc"><?= htmlspecialchars($p['description']) ?></p>
 
-        <?php if ($product['cat_name']): ?>
-          <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;color:<?= $accent ?>;font-weight:700;margin-bottom:0.75rem;">
-            <?= $product['cat_icon'] ?> &nbsp;<?= htmlspecialchars($product['cat_name']) ?>
+      <!-- Status -->
+      <?php if ($p['in_stock']): ?>
+      <div class="prod-status">
+        <div class="prod-status-dot"></div>
+        In Stock — <?= $p['sold_today'] ?> sold today
+      </div>
+      <?php endif; ?>
+
+      <!-- Price -->
+      <div style="display:flex;align-items:baseline;gap:.75rem;margin-bottom:1.5rem;">
+        <div>
+          <div style="font-size:.68rem;color:var(--text3);margin-bottom:2px;text-transform:uppercase;letter-spacing:.1em;">Starting from</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:.04em;color:var(--blue-hi);line-height:1;">
+            $<?= number_format($p['price_from'], 2) ?>
           </div>
-        <?php endif; ?>
-
-        <div class="pd-title"><?= htmlspecialchars($product['name']) ?></div>
-
-        <?php if ($product['short_description']): ?>
-          <p style="font-size:0.95rem;color:var(--text2);line-height:1.75;font-weight:300;margin-bottom:1.5rem;"><?= htmlspecialchars($product['short_description']) ?></p>
-        <?php endif; ?>
-
-        <?php if ($product['type'] === 'variable' && $variations): ?>
-
-          <!-- Variation Selector -->
-          <div style="margin-bottom:1.5rem;">
-            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text2);margin-bottom:0.875rem;">Select License Duration</div>
-            <?php foreach ($variations as $v):
-              $display  = $v['sale_price'] ? $v['sale_price'] : $v['price'];
-              $is_sale  = !empty($v['sale_price']);
-              $in_stock = !empty($v['is_in_stock']);
-            ?>
-            <label class="var-option<?= !$in_stock ? ' out-stock' : '' ?>" id="var-<?= $v['id'] ?>">
-              <input type="radio" name="variation" value="<?= $v['id'] ?>"
-                     data-price="<?= htmlspecialchars($display) ?>"
-                     data-name="<?= htmlspecialchars($v['name']) ?>"
-                     data-product="<?= $product['id'] ?>"
-                     <?= !$in_stock ? 'disabled' : '' ?>
-                     onchange="selectVariation(this)"
-                     style="display:none;">
-              <span class="var-name">
-                <?= htmlspecialchars($v['name']) ?>
-                <?php if (!$in_stock): ?><span class="var-badge">Out of Stock</span><?php endif; ?>
-              </span>
-              <span class="var-price">
-                $<?= number_format((float)$display, 2) ?>
-                <?php if ($is_sale): ?><span class="var-sale">$<?= number_format((float)$v['price'], 2) ?></span><?php endif; ?>
-              </span>
-            </label>
-            <?php endforeach; ?>
-          </div>
-
-          <div id="selected-summary" style="display:none;padding:14px;background:var(--surface2);border:1px solid var(--border2);border-radius:10px;margin-bottom:1.25rem;font-size:0.88rem;color:var(--text2);">
-            Selected: <strong id="sel-name" style="color:var(--text);"></strong> — <strong id="sel-price" style="color:<?= $accent ?>;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;"></strong>
-          </div>
-
-          <button id="buy-btn" class="accent-btn" disabled onclick="doAddToCart()">
-            Select a License Duration
-          </button>
-
-        <?php elseif ($product['type'] === 'simple'): ?>
-          <?php
-            $price    = $product['sale_price'] ?? $product['price'];
-            $in_stock = !empty($product['is_in_stock']);
-          ?>
-          <div style="margin:1.5rem 0;">
-            <div class="pd-simple-price">
-              $<?= number_format((float)$price, 2) ?>
-              <?php if ($product['sale_price'] && $product['price']): ?>
-                <span style="text-decoration:line-through;color:var(--text3);font-size:1.4rem;font-weight:400;margin-left:12px;font-family:'Outfit',sans-serif;">$<?= number_format((float)$product['price'], 2) ?></span>
-              <?php endif; ?>
-            </div>
-          </div>
-          <?php if ($in_stock): ?>
-            <button id="buy-btn-simple" class="accent-btn"
-              onclick="doAddSimple(<?= $product['id'] ?>, null, <?= htmlspecialchars(json_encode($product['name'])) ?>, null, <?= (float)$price ?>)">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-              Add to Cart — $<?= number_format((float)$price, 2) ?>
-            </button>
-          <?php else: ?>
-            <button class="accent-btn" disabled>Out of Stock</button>
-          <?php endif; ?>
-
-        <?php elseif ($product['type'] === 'external'): ?>
-          <a href="https://discord.gg/tgmodz" class="accent-btn" target="_blank" rel="noopener">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg>
-            Purchase on Discord →
-          </a>
-        <?php endif; ?>
-
-        <!-- Payment methods -->
-        <div style="margin-top:1.25rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-          <span style="font-size:0.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;">Accepted:</span>
-          <?php foreach (['CRYPTO','PAYPAL','BANK TRANSFER','CASHAPP'] as $pm): ?>
-            <span class="pay-icon" style="font-size:0.65rem;padding:3px 8px;"><?= $pm ?></span>
-          <?php endforeach; ?>
         </div>
-
-        <!-- Description -->
-        <?php if ($product['description']): ?>
-          <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
-            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text2);margin-bottom:0.875rem;">About This Product</div>
-            <div style="font-size:0.9rem;color:var(--text2);line-height:1.8;font-weight:300;">
-              <?= nl2br(htmlspecialchars(substr($product['description'], 0, 800))) ?>
-            </div>
-          </div>
+        <?php if ($p['price_orig'] > $p['price_from']): ?>
+        <div>
+          <div style="font-size:.7rem;color:var(--text3);text-decoration:line-through;">$<?= number_format($p['price_orig'], 2) ?></div>
+          <div style="font-size:.7rem;color:var(--green);font-weight:600;">Save $<?= number_format($p['price_orig'] - $p['price_from'], 2) ?></div>
+        </div>
         <?php endif; ?>
+      </div>
 
+      <!-- CTA buttons -->
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.75rem;">
+        <a href="https://discord.gg/tgmodz" target="_blank" rel="noopener" class="btn btn-primary btn-lg" style="flex:1;justify-content:center;min-width:160px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          Buy Now
+        </a>
+        <a href="/shop" class="btn btn-outline" style="flex:0;">Back to Shop</a>
+      </div>
+
+      <!-- Trust mini bar -->
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;padding:1rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);">
+        <div style="display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--text2);">
+          <span style="color:var(--green);">⚡</span> Instant delivery
+        </div>
+        <div style="display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--text2);">
+          <span style="color:var(--blue-hi);">🔒</span> Secure payment
+        </div>
+        <div style="display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--text2);">
+          <span style="color:var(--gold);">💬</span> 24/7 support
+        </div>
+        <div style="display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--text2);">
+          <span style="color:var(--green);">✅</span> Authorized seller
+        </div>
       </div>
     </div>
   </div>
-</section>
+</div>
+
+<div class="glow-line" style="margin:0;"></div>
+
+<!-- ─── FEATURES + PLANS ──────────────────────────────────────────────────── -->
+<div style="max-width:1280px;margin:0 auto;padding:3rem 5%;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;" class="prod-features-layout">
+
+  <!-- Features -->
+  <div class="reveal">
+    <div class="tag">What You Get</div>
+    <h2 class="heading" style="margin-bottom:1.5rem;">FEATURES</h2>
+    <div class="features-grid">
+      <?php foreach ($p['features'] as $feat): ?>
+      <div class="feature-item">
+        <div class="feature-check">✓</div>
+        <span><?= htmlspecialchars($feat) ?></span>
+      </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+
+  <!-- Pricing plans -->
+  <div class="reveal" style="transition-delay:.1s">
+    <div class="tag">Choose Your Plan</div>
+    <h2 class="heading" style="margin-bottom:1.5rem;">PRICING</h2>
+    <div class="plans-grid" style="grid-template-columns:repeat(auto-fill,minmax(160px,1fr));">
+      <?php foreach ($p['plans'] as $plan): ?>
+      <div class="plan-card <?= !empty($plan['popular']) ? 'popular' : '' ?>">
+        <?php if (!empty($plan['popular'])): ?>
+          <div class="plan-popular-badge">Most Popular</div>
+        <?php endif; ?>
+        <div class="plan-name"><?= htmlspecialchars($plan['name']) ?></div>
+        <div class="plan-price"><sup>$</sup><?= number_format(floor($plan['price']), 0) ?><sup style="font-size:.9rem;vertical-align:super;font-family:'Outfit',sans-serif;font-weight:700;">.<?= str_pad((int)(($plan['price'] - floor($plan['price'])) * 100), 2, '0') ?></sup></div>
+        <div class="plan-period"><?= $plan['name'] === 'Lifetime' ? 'one time' : 'per period' ?></div>
+        <a href="https://discord.gg/tgmodz" target="_blank" rel="noopener" class="plan-btn">Get This Plan</a>
+      </div>
+      <?php endforeach; ?>
+    </div>
+    <p style="font-size:.75rem;color:var(--text3);margin-top:1rem;line-height:1.6;">All prices in USD. License keys delivered instantly via Discord or email. Renewals are optional — cancel any time.</p>
+  </div>
+</div>
 
 <style>
-.product-detail-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:start;}
-.pd-media{position:sticky;top:80px;}
-@media(max-width:900px){.product-detail-grid{grid-template-columns:1fr;} .pd-media{position:static;}}
+@media (max-width: 768px) {
+  .prod-features-layout { grid-template-columns: 1fr !important; }
+}
 </style>
 
-<script>
-let selectedVarId    = null;
-let selectedVarPrice = null;
-let selectedVarName  = null;
+<!-- ─── MORE PRODUCTS ──────────────────────────────────────────────────────── -->
+<?php
+$others = array_filter($products, fn($prod) => $prod['slug'] !== $slug);
+if (!empty($others)):
+?>
+<div class="glow-line" style="margin:0;"></div>
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div>
+        <div class="tag">Keep Exploring</div>
+        <h2 class="heading">MORE PRODUCTS</h2>
+      </div>
+      <a href="/shop" class="view-all">View all →</a>
+    </div>
+    <div class="products-grid">
+      <?php foreach (array_values($others) as $op): ?>
+      <a href="/product/<?= $op['slug'] ?>" class="prod-card reveal">
+        <div class="prod-thumb">
+          <?php if (!empty($op['image_url'])): ?>
+            <img src="<?= htmlspecialchars($op['image_url']) ?>" alt="<?= htmlspecialchars($op['name']) ?>" loading="lazy">
+          <?php else: ?>
+            <div class="prod-thumb-placeholder" style="background:linear-gradient(135deg,<?= htmlspecialchars($op['game_color']) ?>20,<?= htmlspecialchars($op['game_color']) ?>08);">
+              <span style="position:relative;z-index:1;"><?= $op['game_icon'] ?></span>
+            </div>
+          <?php endif; ?>
+          <span class="prod-badge"><span class="badge <?= $op['badge_class'] ?>"><?= $op['badge'] ?></span></span>
+          <?php if ($op['in_stock']): ?><div class="prod-stock-dot"></div><?php endif; ?>
+        </div>
+        <div class="prod-body">
+          <div class="prod-game"><?= htmlspecialchars($op['game']) ?> · <?= htmlspecialchars($op['category']) ?></div>
+          <div class="prod-name"><?= htmlspecialchars($op['name']) ?></div>
+          <div class="prod-desc"><?= htmlspecialchars($op['tagline']) ?></div>
+          <div class="prod-foot">
+            <div class="prod-price-wrap">
+              <span class="prod-from">From</span>
+              <span class="prod-price">$<?= number_format($op['price_from'], 2) ?></span>
+            </div>
+            <button class="prod-buy">Buy Now</button>
+          </div>
+        </div>
+      </a>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
 
-function selectVariation(input) {
-  document.querySelectorAll('.var-option').forEach(function(el){ el.classList.remove('selected'); });
-  document.getElementById('var-' + input.value).classList.add('selected');
-
-  selectedVarId    = input.value;
-  selectedVarPrice = input.dataset.price;
-  selectedVarName  = input.dataset.name;
-
-  document.getElementById('sel-name').textContent  = input.dataset.name;
-  document.getElementById('sel-price').textContent = '$' + parseFloat(selectedVarPrice).toFixed(2);
-  document.getElementById('selected-summary').style.display = 'block';
-
-  var btn = document.getElementById('buy-btn');
-  btn.disabled  = false;
-  btn.innerHTML = cartIcon() + ' Add to Cart — $' + parseFloat(selectedVarPrice).toFixed(2);
-}
-
-function cartIcon() {
-  return '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>';
-}
-
-function doAddToCart() {
-  if (!selectedVarId) return;
-  var pid = document.querySelector('[name="variation"]').dataset.product;
-  postAddToCart(pid, selectedVarId);
-}
-
-function doAddSimple(pid, vid) {
-  postAddToCart(pid, vid);
-}
-
-function postAddToCart(pid, vid) {
-  var btn  = document.getElementById('buy-btn') || document.getElementById('buy-btn-simple');
-  var orig = btn.innerHTML;
-  btn.disabled  = true;
-  btn.textContent = 'Adding…';
-
-  var body = new URLSearchParams({ product_id: pid, qty: 1 });
-  if (vid) body.append('variation_id', vid);
-
-  fetch('/cart/add', { method: 'POST', body: body })
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      if (data.ok) {
-        btn.innerHTML = '✓ Added to Cart!';
-        var badge = document.querySelector('.cart-badge');
-        if (badge) { badge.textContent = data.cart_count; badge.style.display = 'inline-flex'; }
-        setTimeout(function(){ btn.disabled = false; btn.innerHTML = orig; }, 2000);
-      } else {
-        btn.innerHTML = orig;
-        btn.disabled  = false;
-        alert(data.message || 'Could not add to cart.');
-      }
-    })
-    .catch(function(){ btn.innerHTML = orig; btn.disabled = false; });
-}
-</script>
-
-<?php require __DIR__ . '/includes/footer.php'; ?>
-</body>
+<?php include __DIR__ . '/includes/footer.php'; ?>

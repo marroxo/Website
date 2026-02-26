@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ─────────────────────────────────────────────────────────────────────────────
-#  TGModz deploy script  (PHP edition)
+#  TGModz deploy script
 #  Usage:  bash ~/deploy.sh
 #  Alias:  add to ~/.bashrc → alias w='bash ~/deploy.sh'
 # ─────────────────────────────────────────────────────────────────────────────
@@ -8,7 +8,7 @@
 set -e
 
 REPO="https://github.com/marroxo/Website.git"
-BRANCH="claude/audit-optimize-website-iaoNC"
+BRANCH="claude/redesign-homepage-shop-vnYJW"
 DIR="$HOME/w"
 PM2_NAME="tgmodz"
 PORT="${PORT:-3001}"
@@ -84,20 +84,15 @@ PORT=$PORT pm2 start php \
 pm2 save --force
 
 echo ""
-echo "  ✓  Website updated and live!"
+echo "  ✓  TGModz is live!"
 echo "     http://45.11.229.217:$PORT"
 echo ""
-echo "  Subdomains (configure DNS to point these to this server):"
-echo "     cs2.yourdomain.com:$PORT"
-echo "     gta.yourdomain.com:$PORT"
-echo "     fivem.yourdomain.com:$PORT"
-echo "     r6.yourdomain.com:$PORT"
-echo "     rdr2.yourdomain.com:$PORT"
-echo ""
-echo "  Path-based routes (work without DNS changes):"
-echo "     http://45.11.229.217:$PORT/cs2"
-echo "     http://45.11.229.217:$PORT/gta"
-echo "     http://45.11.229.217:$PORT/fivem"
-echo "     http://45.11.229.217:$PORT/r6"
-echo "     http://45.11.229.217:$PORT/rdr2"
+echo "  Routes:"
+echo "     http://45.11.229.217:$PORT/          → Homepage"
+echo "     http://45.11.229.217:$PORT/shop       → Shop"
+echo "     http://45.11.229.217:$PORT/product/neverlose-cs2"
+echo "     http://45.11.229.217:$PORT/product/cherax-gta5"
+echo "     http://45.11.229.217:$PORT/product/susano-fivem"
+echo "     http://45.11.229.217:$PORT/product/ethereal-spoofer"
+echo "     http://45.11.229.217:$PORT/product/kernaim-arc-raiders"
 echo ""
