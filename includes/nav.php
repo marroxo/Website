@@ -37,16 +37,29 @@ $active_page = $active_page ?? '';
 
 <script>
 (function(){
-  var btn = document.getElementById('hamburgerBtn');
-  var nav = document.getElementById('mobileNav');
+  var btn    = document.getElementById('hamburgerBtn');
+  var nav    = document.getElementById('mobileNav');
+  var navbar = document.getElementById('navbar');
+
   btn.addEventListener('click', function(){
     nav.classList.toggle('open');
   });
-  // Close on outside click
   document.addEventListener('click', function(e){
     if (!nav.contains(e.target) && !btn.contains(e.target)) {
       nav.classList.remove('open');
     }
   });
+
+  // Scroll-activated navbar glassmorphism
+  var lastY = 0;
+  window.addEventListener('scroll', function(){
+    var y = window.scrollY;
+    if (y > 40) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+    lastY = y;
+  }, { passive: true });
 })();
 </script>
