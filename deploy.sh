@@ -8,7 +8,7 @@
 set -e
 
 REPO="https://github.com/marroxo/Website.git"
-BRANCH="claude/redesign-homepage-shop-vnYJW"
+BRANCH="claude/gaming-landing-page-pyjla"
 DIR="$HOME/w"
 PM2_NAME="tgmodz"
 PORT="${PORT:-3001}"

@@ -13,27 +13,60 @@ include __DIR__ . '/includes/nav.php';
 
 <!-- ─── HERO ─────────────────────────────────────────────────────────────── -->
 <section class="hero">
+  <!-- Background layers -->
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
+  <div class="hero-scan"></div>
 
+  <!-- Animated glow orbs -->
+  <div class="hero-orb hero-orb-a"></div>
+  <div class="hero-orb hero-orb-b"></div>
+  <div class="hero-orb hero-orb-c"></div>
+
+  <!-- Floating product spotlight card (desktop only) -->
+  <div class="hero-visual">
+    <div class="hero-visual-card">
+      <span class="hvc-badge"><span class="badge badge-hot">HOT</span></span>
+      <div class="hvc-header">
+        <span class="hvc-live-dot"></span>
+        <span class="hvc-label">Live — Top Product</span>
+      </div>
+      <div class="hvc-name">Neverlose CS2</div>
+      <div class="hvc-game">Counter-Strike 2 · Enhancement</div>
+      <div class="hvc-price-row">
+        <span class="hvc-price">$18.50</span>
+        <span class="hvc-period">/ month</span>
+      </div>
+      <div class="hvc-stats">
+        <div class="hvc-stat"><span>12</span> sold today</div>
+        <div class="hvc-stat"><span>4.9★</span> rated</div>
+      </div>
+      <a href="/product/neverlose-cs2" class="hvc-cta">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.99-1.79l1.44-8.21H6"/></svg>
+        Explore Gear
+      </a>
+    </div>
+  </div>
+
+  <!-- Hero content -->
   <div class="hero-eyebrow">
     <span class="hero-dot"></span>
     &nbsp;100,000+ Gamers Served Since 2021
   </div>
 
   <h1>
-    LEVEL UP<br>
-    YOUR <span class="accent">GAME</span>
+    DOMINATE<br>
+    EVERY <span class="accent">MATCH</span>
   </h1>
 
   <p class="hero-sub">
-    Premium, authorized game enhancement software. Instant delivery, undetected, constantly updated — backed by the most trusted name in gaming mods.
+    Premium game enhancement software — authorized, instantly delivered, and constantly updated. The competitive edge trusted by 100K+ serious gamers.
   </p>
 
   <div class="hero-ctas">
     <a href="/shop" class="btn btn-primary btn-lg">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-      Browse Shop
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      Explore Gear
     </a>
     <a href="https://discord.gg/tgmodz" target="_blank" rel="noopener" class="btn btn-outline btn-lg">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.04.036.05a19.859 19.859 0 005.993 3.03.077.077 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.036-.05c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg>
@@ -90,6 +123,60 @@ include __DIR__ . '/includes/nav.php';
     </div>
   </div>
 </div>
+
+<!-- ─── FEATURE HIGHLIGHTS ────────────────────────────────────────────────── -->
+<section class="section" style="padding-top:72px;padding-bottom:60px;">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div>
+        <div class="tag">Why TGModz</div>
+        <h2 class="heading">BUILT FOR SERIOUS GAMERS</h2>
+        <p class="subtext" style="margin-top:.5rem">Everything you need for a competitive edge, delivered with zero friction.</p>
+      </div>
+    </div>
+    <div class="feature-hl-grid">
+
+      <div class="feature-hl-card reveal">
+        <div class="fhl-icon-wrap fhl-blue">⚡</div>
+        <div class="fhl-title">Instant Digital Delivery</div>
+        <p class="fhl-desc">License keys and download links sent within seconds of payment — via email and Discord. No waiting, no delays.</p>
+      </div>
+
+      <div class="feature-hl-card reveal" style="transition-delay:.08s">
+        <div class="fhl-icon-wrap fhl-green">🛡️</div>
+        <div class="fhl-title">Verified & Always Safe</div>
+        <p class="fhl-desc">Every product is tested, reviewed, and actively monitored by our team. We only list software that we'd use ourselves.</p>
+      </div>
+
+      <div class="feature-hl-card reveal" style="transition-delay:.16s">
+        <div class="fhl-icon-wrap fhl-cyan">🔄</div>
+        <div class="fhl-title">Constant Updates</div>
+        <p class="fhl-desc">All tools are continuously updated to stay ahead of anti-cheat patches. Your license always gets the latest build.</p>
+      </div>
+
+      <div class="feature-hl-card reveal" style="transition-delay:.24s">
+        <div class="fhl-icon-wrap fhl-purple">💬</div>
+        <div class="fhl-title">24/7 Expert Support</div>
+        <p class="fhl-desc">Real humans on Discord around the clock. Setup help, troubleshooting, refunds — we've got you covered.</p>
+      </div>
+
+      <div class="feature-hl-card reveal" style="transition-delay:.32s">
+        <div class="fhl-icon-wrap fhl-gold">🔒</div>
+        <div class="fhl-title">Secure Transactions</div>
+        <p class="fhl-desc">Encrypted checkout with crypto, card, and PayPal support. Your payment data is never stored or shared.</p>
+      </div>
+
+      <div class="feature-hl-card reveal" style="transition-delay:.4s">
+        <div class="fhl-icon-wrap fhl-red">🎯</div>
+        <div class="fhl-title">Zero Input Lag</div>
+        <p class="fhl-desc">Our enhancement tools are precision-engineered for competitive play — smooth performance, no frame drops, tear-free rendering.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
 
 <!-- ─── FEATURED PRODUCTS ─────────────────────────────────────────────────── -->
 <section class="section">
