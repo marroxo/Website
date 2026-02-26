@@ -507,7 +507,7 @@ nav#navbar {
   border-radius: inherit;
   background: linear-gradient(135deg, rgba(96,165,250,.06) 0%, transparent 50%, rgba(6,182,212,.04) 100%);
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
 }
 .prod-card:hover {
   border-color: rgba(59,130,246,.45);
@@ -781,6 +781,7 @@ nav#navbar {
   padding: 60px 5% 40px;
   text-align: center;
   position: relative;
+  overflow: hidden;
 }
 .shop-hero-bg {
   position: absolute;
@@ -836,12 +837,19 @@ nav#navbar {
 .prod-detail-img {
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 20px 60px rgba(0,0,0,.5), var(--neon-blue);
   aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: box-shadow .3s;
+}
+.prod-detail-img:hover {
+  box-shadow: 0 30px 80px rgba(0,0,0,.6), var(--neon-blue-lg);
 }
 .prod-detail-img img { width: 100%; height: 100%; object-fit: cover; }
 .prod-detail-img-placeholder {
@@ -926,21 +934,28 @@ nav#navbar {
   margin-bottom: 2rem;
 }
 .plan-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   padding: 1.5rem 1.25rem;
   text-align: center;
-  transition: all .25s;
+  transition: all .3s cubic-bezier(.4,0,.2,1);
   position: relative;
 }
 .plan-card.popular {
-  border-color: var(--blue);
-  box-shadow: 0 0 28px rgba(59,130,246,.18);
+  border-color: rgba(59,130,246,.5);
+  box-shadow: 0 0 40px rgba(59,130,246,.2), inset 0 0 40px rgba(59,130,246,.03);
 }
 .plan-card:not(.popular):hover {
-  border-color: rgba(59,130,246,.25);
-  transform: translateY(-3px);
+  border-color: rgba(59,130,246,.4);
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px rgba(0,0,0,.5), var(--neon-blue);
+}
+.plan-card.popular:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 60px rgba(0,0,0,.5), var(--neon-blue-lg);
 }
 .plan-popular-badge {
   position: absolute;
@@ -1437,13 +1452,49 @@ nav#navbar.scrolled {
 
 /* ── Glassmorphism review cards ───────────────────────────────────────────── */
 .review-card {
-  background: var(--glass-bg) !important;
+  background: rgba(14, 22, 48, 0.6) !important;
   backdrop-filter: var(--glass-blur) !important;
   -webkit-backdrop-filter: var(--glass-blur) !important;
 }
 .review-card:hover {
-  border-color: rgba(59,130,246,.3) !important;
-  box-shadow: 0 12px 40px rgba(0,0,0,.4);
+  border-color: rgba(59,130,246,.35) !important;
+  box-shadow: 0 16px 48px rgba(0,0,0,.5), var(--neon-blue) !important;
+  transform: translateY(-4px);
+}
+
+/* ── Ambient glow sections (makes glassmorphism pop) ────────────────────── */
+.section-glow {
+  position: relative;
+}
+.section-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 50%, rgba(59,130,246,.07), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 80% 50%, rgba(6,182,212,.05), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.section-glow > * { position: relative; z-index: 1; }
+
+/* ── Animated gradient border on card hover ───────────────────────────────── */
+@keyframes border-rotate {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.prod-card:hover::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--blue), var(--cyan), var(--purple), var(--blue));
+  background-size: 300% 300%;
+  animation: border-rotate 3s linear infinite;
+  z-index: -2;
+  pointer-events: none;
+  opacity: .6;
 }
 
 /* ── Stats bar enhancement ────────────────────────────────────────────────── */
