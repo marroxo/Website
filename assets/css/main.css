@@ -485,288 +485,235 @@ nav#navbar {
 /* ── Product cards ───────────────────────────────────────────────────────────── */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
 }
+
+/* ── Card shell ── */
 .prod-card {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid rgba(59,130,246,.18);
+  border-radius: 14px;
   overflow: hidden;
-  transition: border-color .3s, transform .3s, box-shadow .3s;
   display: flex;
   flex-direction: column;
   position: relative;
-}
-.prod-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(135deg, rgba(96,165,250,.06) 0%, transparent 50%, rgba(6,182,212,.04) 100%);
-  pointer-events: none;
-  z-index: -1;
+  transition: transform .3s, box-shadow .3s, border-color .3s;
+  cursor: pointer;
 }
 .prod-card:hover {
-  border-color: rgba(59,130,246,.45);
-  transform: translateY(-6px) scale(1.01);
-  box-shadow: 0 24px 64px rgba(0,0,0,.6), var(--neon-blue);
+  transform: translateY(-6px);
+  border-color: rgba(59,130,246,.5);
+  box-shadow: 0 20px 60px rgba(0,0,0,.65), 0 0 40px rgba(59,130,246,.18);
 }
-/* ── Game color accent bar at top of card ── */
-.prod-accent {
-  height: 3px;
-  width: 100%;
-  flex-shrink: 0;
-  transition: height .3s;
-}
-.prod-card:hover .prod-accent { height: 4px; }
 
-.prod-thumb {
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  background: var(--surface2);
+/* ── Corner bracket decorations ── */
+.prod-corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  z-index: 10;
+  pointer-events: none;
 }
-.prod-thumb img {
+.prod-corner-tl { top: 7px;  left: 7px;  border-top: 2px solid var(--cyan); border-left: 2px solid var(--cyan);   border-radius: 2px 0 0 0; }
+.prod-corner-tr { top: 7px;  right: 7px; border-top: 2px solid var(--cyan); border-right: 2px solid var(--cyan);  border-radius: 0 2px 0 0; }
+.prod-corner-bl { bottom: 7px; left: 7px;  border-bottom: 2px solid var(--cyan); border-left: 2px solid var(--cyan);  border-radius: 0 0 0 2px; }
+.prod-corner-br { bottom: 7px; right: 7px; border-bottom: 2px solid var(--cyan); border-right: 2px solid var(--cyan); border-radius: 0 0 2px 0; }
+
+/* ── Image wrapper — full-bleed game art ── */
+.prod-img-wrap {
+  position: relative;
+  height: 360px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.prod-img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform .5s;
+  display: block;
+  transition: transform .5s ease;
 }
-.prod-card:hover .prod-thumb img { transform: scale(1.07); }
-/* gradient overlay at bottom of image for text legibility */
-.prod-thumb-overlay {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 60px;
-  background: linear-gradient(to top, rgba(6,7,14,.8), transparent);
-  pointer-events: none;
-  z-index: 1;
-}
-.prod-thumb-placeholder {
+.prod-card:hover .prod-img-wrap img { transform: scale(1.06); }
+
+/* placeholder for products without a real image */
+.prod-img-placeholder {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 4rem;
+  font-size: 6rem;
   position: relative;
 }
-.prod-thumb-placeholder::before {
+.prod-img-placeholder::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 40%, rgba(59,130,246,.15), transparent 70%);
+  background: radial-gradient(ellipse at 50% 35%, rgba(59,130,246,.22), transparent 65%);
 }
-.prod-badge { position: absolute; top: 10px; left: 10px; z-index: 3; }
+.prod-img-placeholder .prod-img-icon {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 0 24px rgba(59,130,246,.5));
+}
+
+/* dark gradient — fades image into content below */
+.prod-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0)     10%,
+    rgba(6,7,14,.15)  40%,
+    rgba(6,7,14,.65)  65%,
+    rgba(6,7,14,.92)  85%,
+    rgba(6,7,14,.98) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── Badge & stock dot (positioned over image) ── */
+.prod-badge { position: absolute; top: 12px; left: 12px; z-index: 4; }
 .prod-stock-dot {
   position: absolute;
-  top: 12px; right: 12px;
-  width: 8px; height: 8px;
+  top: 14px; right: 14px;
+  width: 9px; height: 9px;
   border-radius: 50%;
   background: var(--green);
-  box-shadow: 0 0 8px var(--green);
+  box-shadow: 0 0 10px var(--green);
   animation: dot-pulse 2s infinite;
-  z-index: 3;
+  z-index: 4;
 }
-/* discount % badge on thumbnail */
-.prod-discount {
+
+/* ── Game logo overlay (top-left, below badge) ── */
+.prod-game-logo {
   position: absolute;
-  bottom: 10px; right: 10px;
-  background: var(--red);
-  color: #fff;
-  font-size: .6rem;
-  font-weight: 800;
-  padding: 2px 7px;
-  border-radius: 4px;
-  letter-spacing: .06em;
+  top: 40px;
+  left: 12px;
   z-index: 3;
-}
-
-.prod-body { padding: 1rem; flex: 1; display: flex; flex-direction: column; gap: 0; }
-
-/* game pill + category label row */
-.prod-meta {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: .55rem;
   gap: .4rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: .1em;
+  color: rgba(255,255,255,.9);
+  text-shadow: 0 2px 12px rgba(0,0,0,.9);
 }
-.prod-game-pill {
+
+/* ── Content overlay at bottom of image ── */
+.prod-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 0 1.1rem 1.1rem;
+  z-index: 2;
+}
+.prod-overlay-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.55rem;
+  letter-spacing: .06em;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: .35rem;
+  text-shadow: 0 2px 16px rgba(0,0,0,.8);
+}
+.prod-overlay-price-label {
+  font-size: .65rem;
+  color: rgba(255,255,255,.5);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  display: block;
+  margin-bottom: .15rem;
+}
+.prod-overlay-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: .35rem;
+  margin-bottom: .7rem;
+}
+.prod-overlay-from {
+  font-size: .85rem;
+  color: rgba(255,255,255,.75);
+  font-weight: 400;
+}
+.prod-overlay-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: #fff;
+  line-height: 1;
+  letter-spacing: .04em;
+}
+.prod-overlay-orig {
+  font-size: .75rem;
+  color: rgba(255,255,255,.38);
+  text-decoration: line-through;
+}
+
+/* ── Glassmorphism feature pills ── */
+.prod-pills {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+.prod-pill {
   display: inline-flex;
   align-items: center;
   gap: .3rem;
-  padding: .2rem .6rem;
-  border-radius: 20px;
-  border: 1px solid;
-  font-size: .6rem;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  line-height: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 70%;
-}
-.prod-category-label {
-  font-size: .58rem;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  white-space: nowrap;
-}
-
-/* keep legacy .prod-game for pages not yet updated */
-.prod-game {
-  font-size: .65rem;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  margin-bottom: .3rem;
-}
-.prod-name {
-  font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.25;
-  margin-bottom: .4rem;
-  letter-spacing: -.01em;
-}
-.prod-desc {
-  font-size: .75rem;
-  color: var(--text2);
-  line-height: 1.55;
-  margin-bottom: .5rem;
-  font-weight: 300;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-/* star rating row */
-.prod-rating {
-  display: flex;
-  align-items: center;
-  gap: .35rem;
-  margin-bottom: .55rem;
-}
-.prod-stars {
-  color: var(--gold);
-  font-size: .72rem;
-  letter-spacing: .05em;
-  line-height: 1;
-}
-.prod-rating-num {
-  font-size: .72rem;
-  font-weight: 700;
-  color: var(--text);
-}
-.prod-rating-count {
-  font-size: .65rem;
-  color: var(--text3);
-}
-
-/* features pills */
-.prod-feats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .3rem;
-  margin-bottom: .65rem;
-}
-.prod-feat-tag {
-  font-size: .6rem;
-  background: var(--blue-dim);
-  border: 1px solid var(--border2);
-  color: var(--blue-hi);
-  padding: 2px 7px;
-  border-radius: 3px;
-  letter-spacing: .03em;
-}
-.prod-feat-more {
-  font-size: .6rem;
-  color: var(--text3);
-  padding: 2px 0;
-  align-self: center;
-}
-
-.prod-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: auto;
-  padding-top: .7rem;
-  border-top: 1px solid var(--border);
-  gap: .5rem;
-}
-.prod-price-wrap { display: flex; align-items: baseline; gap: .3rem; flex-wrap: wrap; }
-.prod-from { font-size: .6rem; color: var(--text3); line-height: 1; }
-.prod-price {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.45rem;
-  letter-spacing: .04em;
-  color: var(--blue-hi);
-  line-height: 1;
-}
-.prod-orig {
+  padding: .32rem .8rem;
+  background: rgba(4,12,30,.6);
+  border: 1px solid rgba(6,182,212,.5);
+  border-radius: 100px;
   font-size: .68rem;
-  color: var(--text3);
-  text-decoration: line-through;
-}
-/* sold today indicator */
-.prod-sold-today {
-  display: flex;
-  align-items: center;
-  gap: .3rem;
-  font-size: .62rem;
-  color: var(--green);
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: .04em;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   white-space: nowrap;
+  text-shadow: none;
 }
-.prod-sold-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 6px var(--green);
-  animation: dot-pulse 2s infinite;
+.prod-pill-icon { color: var(--cyan); font-size: .82rem; line-height: 1; }
+
+/* ── CTA section below image ── */
+.prod-cta {
+  padding: .85rem .85rem .85rem;
+  background: var(--surface);
   flex-shrink: 0;
 }
-
-/* full-width CTA button */
-.prod-buy {
+.prod-cta-btn {
   display: block;
   width: 100%;
-  padding: .6rem 1rem;
-  margin-top: .75rem;
-  background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+  padding: .82rem 1rem;
+  background: #0d1f4a;
   color: #fff;
-  font-size: .75rem;
-  font-weight: 700;
-  border-radius: 7px;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  transition: all .2s;
-  border: none;
-  cursor: pointer;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: .14em;
   text-align: center;
+  border: 1px solid rgba(59,130,246,.25);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background .2s, box-shadow .2s, border-color .2s;
   position: relative;
   overflow: hidden;
 }
-.prod-buy::before {
+.prod-cta-btn::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,.12), transparent);
+  background: linear-gradient(135deg, rgba(59,130,246,.12) 0%, transparent 60%);
   pointer-events: none;
 }
-.prod-buy:hover {
-  background: linear-gradient(135deg, var(--blue-hi), var(--blue));
-  box-shadow: var(--neon-blue);
-  transform: translateY(-1px);
+.prod-cta-btn:hover {
+  background: #1a3a7a;
+  border-color: rgba(59,130,246,.55);
+  box-shadow: 0 0 24px rgba(59,130,246,.3);
+}
+.prod-cta-arrow {
+  color: var(--cyan);
+  margin-left: .3rem;
 }
 
 /* ── Categories ──────────────────────────────────────────────────────────────── */
@@ -964,11 +911,10 @@ nav#navbar {
 .shop-grid-inner { max-width: 1280px; margin: 0 auto; }
 .shop-products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 22px;
 }
-.shop-products-grid .prod-card { min-height: 400px; }
-.shop-products-grid .prod-thumb { height: 210px; }
+.shop-products-grid .prod-img-wrap { height: 380px; }
 
 /* ── Product detail ──────────────────────────────────────────────────────────── */
 .prod-detail-hero {
@@ -1624,23 +1570,11 @@ nav#navbar.scrolled {
 }
 .section-glow > * { position: relative; z-index: 1; }
 
-/* ── Animated gradient border on card hover ───────────────────────────────── */
+/* ── Animated gradient border on card hover (kept for @keyframes reuse) ──── */
 @keyframes border-rotate {
   0%   { background-position: 0% 50%; }
   50%  { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
-}
-.prod-card:hover::after {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--blue), var(--cyan), var(--purple), var(--blue));
-  background-size: 300% 300%;
-  animation: border-rotate 3s linear infinite;
-  z-index: -2;
-  pointer-events: none;
-  opacity: .6;
 }
 
 /* ── Stats bar enhancement ────────────────────────────────────────────────── */

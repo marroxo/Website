@@ -25,6 +25,7 @@ return [
         'sold_today'  => 12,
         'rating'      => 4.9,
         'review_count'=> 127,
+        'cta_text'    => 'START CHEATING NOW!',
         'image_url'   => 'https://tgmodz.com/wp-content/uploads/2023/12/NeverLose.png',
         'features'    => [
             'Precision Aimbot with smooth aim & FOV control',
@@ -63,6 +64,7 @@ return [
         'sold_today'  => 31,
         'rating'      => 4.8,
         'review_count'=> 214,
+        'cta_text'    => 'START CHEATING NOW!',
         'image_url'   => 'https://tgmodz.com/wp-content/uploads/2025/12/6-1.png',
         'features'    => [
             'Money drops & RP recovery',
@@ -101,6 +103,7 @@ return [
         'sold_today'  => 22,
         'rating'      => 4.7,
         'review_count'=> 89,
+        'cta_text'    => 'START CHEATING NOW!',
         'image_url'   => null,
         'features'    => [
             'Infinite money & RP drops',
@@ -138,6 +141,7 @@ return [
         'sold_today'  => 18,
         'rating'      => 4.9,
         'review_count'=> 156,
+        'cta_text'    => 'GET UNBANNED NOW!',
         'image_url'   => null,
         'features'    => [
             'Full HWID spoofing: CPU, GPU, RAM, Disk, NIC',
@@ -175,6 +179,7 @@ return [
         'sold_today'  => 8,
         'rating'      => 4.8,
         'review_count'=> 43,
+        'cta_text'    => 'START CHEATING NOW!',
         'image_url'   => null,
         'features'    => [
             'Precision Aimbot with smooth aim & bone targeting',
