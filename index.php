@@ -191,23 +191,61 @@ include __DIR__ . '/includes/nav.php';
     </div>
 
     <div class="products-grid">
-      <?php foreach ($product_list as $p): ?>
+      <?php foreach ($product_list as $p):
+        $discount = ($p['price_orig'] > $p['price_from'])
+          ? round((($p['price_orig'] - $p['price_from']) / $p['price_orig']) * 100)
+          : 0;
+        $rating = $p['rating'] ?? 4.8;
+        $review_count = $p['review_count'] ?? 0;
+        $stars_full = floor($rating);
+        $stars_half = ($rating - $stars_full) >= 0.5 ? 1 : 0;
+      ?>
       <a href="/product/<?= $p['slug'] ?>" class="prod-card reveal">
+        <!-- Game color accent bar -->
+        <div class="prod-accent" style="background:linear-gradient(90deg,<?= htmlspecialchars($p['game_color']) ?>,<?= htmlspecialchars($p['game_color']) ?>40)"></div>
+
         <div class="prod-thumb">
           <?php if (!empty($p['image_url'])): ?>
             <img src="<?= htmlspecialchars($p['image_url']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" loading="lazy">
           <?php else: ?>
-            <div class="prod-thumb-placeholder" style="background: linear-gradient(135deg, <?= htmlspecialchars($p['game_color']) ?>18, <?= htmlspecialchars($p['game_color']) ?>08);">
+            <div class="prod-thumb-placeholder" style="background:linear-gradient(135deg,<?= htmlspecialchars($p['game_color']) ?>22,<?= htmlspecialchars($p['game_color']) ?>0a);">
               <span style="position:relative;z-index:1;"><?= $p['game_icon'] ?></span>
             </div>
           <?php endif; ?>
+          <div class="prod-thumb-overlay"></div>
           <span class="prod-badge"><span class="badge <?= $p['badge_class'] ?>"><?= $p['badge'] ?></span></span>
           <?php if ($p['in_stock']): ?><div class="prod-stock-dot"></div><?php endif; ?>
+          <?php if ($discount > 0): ?><span class="prod-discount">-<?= $discount ?>%</span><?php endif; ?>
         </div>
+
         <div class="prod-body">
-          <div class="prod-game"><?= htmlspecialchars($p['game']) ?> · <?= htmlspecialchars($p['category']) ?></div>
+          <!-- Game pill + category -->
+          <div class="prod-meta">
+            <span class="prod-game-pill" style="background:<?= htmlspecialchars($p['game_color']) ?>18;border-color:<?= htmlspecialchars($p['game_color']) ?>38;color:<?= htmlspecialchars($p['game_color']) ?>">
+              <?= $p['game_icon'] ?> <?= htmlspecialchars($p['game']) ?>
+            </span>
+            <span class="prod-category-label"><?= htmlspecialchars($p['category']) ?></span>
+          </div>
+
           <div class="prod-name"><?= htmlspecialchars($p['name']) ?></div>
-          <div class="prod-desc"><?= htmlspecialchars($p['description']) ?></div>
+
+          <!-- Star rating -->
+          <div class="prod-rating">
+            <span class="prod-stars"><?= str_repeat('★', $stars_full) ?><?= $stars_half ? '★' : '' ?><?= str_repeat('☆', max(0, 5 - $stars_full - $stars_half)) ?></span>
+            <span class="prod-rating-num"><?= number_format($rating, 1) ?></span>
+            <?php if ($review_count > 0): ?><span class="prod-rating-count">(<?= $review_count ?>)</span><?php endif; ?>
+          </div>
+
+          <!-- Features preview -->
+          <div class="prod-feats">
+            <?php foreach (array_slice($p['features'], 0, 3) as $feat): ?>
+            <span class="prod-feat-tag"><?= htmlspecialchars($feat) ?></span>
+            <?php endforeach; ?>
+            <?php if (count($p['features']) > 3): ?>
+            <span class="prod-feat-more">+<?= count($p['features']) - 3 ?> more</span>
+            <?php endif; ?>
+          </div>
+
           <div class="prod-foot">
             <div class="prod-price-wrap">
               <span class="prod-from">From</span>
@@ -216,8 +254,13 @@ include __DIR__ . '/includes/nav.php';
                 <span class="prod-orig">$<?= number_format($p['price_orig'], 2) ?></span>
               <?php endif; ?>
             </div>
-            <button class="prod-buy">Buy Now</button>
+            <div class="prod-sold-today">
+              <span class="prod-sold-dot"></span>
+              <?= $p['sold_today'] ?> sold today
+            </div>
           </div>
+
+          <button class="prod-buy">Buy Now &rarr;</button>
         </div>
       </a>
       <?php endforeach; ?>
