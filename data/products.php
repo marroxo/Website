@@ -23,6 +23,8 @@ return [
         'price_orig'  => 28.00,
         'in_stock'    => true,
         'sold_today'  => 12,
+        'rating'      => 4.9,
+        'review_count'=> 127,
         'image_url'   => 'https://tgmodz.com/wp-content/uploads/2023/12/NeverLose.png',
         'features'    => [
             'Precision Aimbot with smooth aim & FOV control',
@@ -59,6 +61,8 @@ return [
         'price_orig'  => 20.00,
         'in_stock'    => true,
         'sold_today'  => 31,
+        'rating'      => 4.8,
+        'review_count'=> 214,
         'image_url'   => 'https://tgmodz.com/wp-content/uploads/2025/12/6-1.png',
         'features'    => [
             'Money drops & RP recovery',
@@ -95,6 +99,8 @@ return [
         'price_orig'  => 22.00,
         'in_stock'    => true,
         'sold_today'  => 22,
+        'rating'      => 4.7,
+        'review_count'=> 89,
         'image_url'   => null,
         'features'    => [
             'Infinite money & RP drops',
@@ -130,6 +136,8 @@ return [
         'price_orig'  => 30.00,
         'in_stock'    => true,
         'sold_today'  => 18,
+        'rating'      => 4.9,
+        'review_count'=> 156,
         'image_url'   => null,
         'features'    => [
             'Full HWID spoofing: CPU, GPU, RAM, Disk, NIC',
@@ -165,6 +173,8 @@ return [
         'price_orig'  => 35.00,
         'in_stock'    => true,
         'sold_today'  => 8,
+        'rating'      => 4.8,
+        'review_count'=> 43,
         'image_url'   => null,
         'features'    => [
             'Precision Aimbot with smooth aim & bone targeting',
