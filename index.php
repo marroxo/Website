@@ -124,42 +124,6 @@ include __DIR__ . '/includes/nav.php';
   </div>
 </div>
 
-<!-- ─── LIVE SALES TICKER ──────────────────────────────────────────────────── -->
-<div class="live-ticker" aria-label="Recent sales activity">
-  <div class="live-ticker-label">
-    <span class="live-ticker-dot"></span>
-    LIVE
-  </div>
-  <div class="live-ticker-track-wrap">
-    <div class="live-ticker-track ticker-track-base">
-      <span class="lti"><span class="lti-icon">🎯</span> <strong>xSniperKing</strong> purchased <span class="lti-prod">Neverlose CS2</span> <span class="lti-time">2m ago</span></span>
-      <span class="lti-sep">·</span>
-      <span class="lti"><span class="lti-icon">🏎️</span> <strong>GTA_Legend99</strong> purchased <span class="lti-prod">Cherax GTA5</span> <span class="lti-time">5m ago</span></span>
-      <span class="lti-sep">·</span>
-      <span class="lti"><span class="lti-icon">🛡️</span> <strong>SpooferPro</strong> purchased <span class="lti-prod">Ethereal Spoofer</span> <span class="lti-time">8m ago</span></span>
-      <span class="lti-sep">·</span>
-      <span class="lti"><span class="lti-icon">🌐</span> <strong>FiveM_King</strong> purchased <span class="lti-prod">Susano FiveM</span> <span class="lti-time">11m ago</span></span>
-      <span class="lti-sep">·</span>
-      <span class="lti"><span class="lti-icon">🤖</span> <strong>ArcPlayer</strong> purchased <span class="lti-prod">Kernaim ARC Raiders</span> <span class="lti-time">14m ago</span></span>
-      <span class="lti-sep">·</span>
-      <span class="lti"><span class="lti-icon">🎯</span> <strong>HeadshotOnly</strong> purchased <span class="lti-prod">Neverlose CS2</span> <span class="lti-time">17m ago</span></span>
-      <span class="lti-sep">·</span>
-      <span class="lti"><span class="lti-icon">🏎️</span> <strong>GodMode_GTA</strong> purchased <span class="lti-prod">Cherax GTA5</span> <span class="lti-time">21m ago</span></span>
-      <span class="lti-sep">·</span>
-      <!-- Duplicate for seamless loop -->
-      <span class="lti"><span class="lti-icon">🎯</span> <strong>xSniperKing</strong> purchased <span class="lti-prod">Neverlose CS2</span> <span class="lti-time">2m ago</span></span>
-      <span class="lti-sep">·</span>
-      <span class="lti"><span class="lti-icon">🏎️</span> <strong>GTA_Legend99</strong> purchased <span class="lti-prod">Cherax GTA5</span> <span class="lti-time">5m ago</span></span>
-      <span class="lti-sep">·</span>
-      <span class="lti"><span class="lti-icon">🛡️</span> <strong>SpooferPro</strong> purchased <span class="lti-prod">Ethereal Spoofer</span> <span class="lti-time">8m ago</span></span>
-      <span class="lti-sep">·</span>
-      <span class="lti"><span class="lti-icon">🌐</span> <strong>FiveM_King</strong> purchased <span class="lti-prod">Susano FiveM</span> <span class="lti-time">11m ago</span></span>
-      <span class="lti-sep">·</span>
-      <span class="lti"><span class="lti-icon">🤖</span> <strong>ArcPlayer</strong> purchased <span class="lti-prod">Kernaim ARC Raiders</span> <span class="lti-time">14m ago</span></span>
-    </div>
-  </div>
-</div>
-
 <!-- ─── FEATURE HIGHLIGHTS ────────────────────────────────────────────────── -->
 <section class="section section-glow" style="padding-top:72px;padding-bottom:60px;">
   <div class="section-inner">

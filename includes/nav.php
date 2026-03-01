@@ -1,26 +1,8 @@
 <?php
 $active_page = $active_page ?? '';
 ?>
-<div class="announce" aria-label="Announcements">
-  <!-- Items intentionally duplicated for seamless CSS marquee loop (translateX -50%) -->
-  <div class="announce-track ticker-track-base">
-    <span class="announce-item">🎮 New products added weekly — <a href="/shop">Browse the full catalogue →</a></span>
-    <span class="announce-sep">·</span>
-    <span class="announce-item">⚡ Instant delivery on all orders — license keys sent within seconds</span>
-    <span class="announce-sep">·</span>
-    <span class="announce-item">🛡️ All products verified undetected — <a href="/shop">Shop now →</a></span>
-    <span class="announce-sep">·</span>
-    <span class="announce-item">💬 24/7 Discord support — join <a href="https://discord.gg/tgmodz" target="_blank" rel="noopener">our server →</a></span>
-    <span class="announce-sep">·</span>
-    <!-- Duplicate set — seamless loop -->
-    <span class="announce-item">🎮 New products added weekly — <a href="/shop">Browse the full catalogue →</a></span>
-    <span class="announce-sep">·</span>
-    <span class="announce-item">⚡ Instant delivery on all orders — license keys sent within seconds</span>
-    <span class="announce-sep">·</span>
-    <span class="announce-item">🛡️ All products verified undetected — <a href="/shop">Shop now →</a></span>
-    <span class="announce-sep">·</span>
-    <span class="announce-item">💬 24/7 Discord support — join <a href="https://discord.gg/tgmodz" target="_blank" rel="noopener">our server →</a></span>
-  </div>
+<div class="announce">
+  New products added weekly — <a href="/shop">Browse the catalogue →</a>
 </div>
 
 <nav id="navbar">
