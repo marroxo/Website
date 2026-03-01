@@ -2,7 +2,7 @@
 $active_page = $active_page ?? '';
 ?>
 <div class="announce">
-  🎮 New products added weekly — <a href="/shop">Browse the full catalogue →</a>
+  New products added weekly — <a href="/shop">Browse the catalogue →</a>
 </div>
 
 <nav id="navbar">
@@ -12,7 +12,7 @@ $active_page = $active_page ?? '';
     <li><a href="/"     class="<?= $active_page === 'home'  ? 'active' : '' ?>">Home</a></li>
     <li><a href="/shop" class="<?= $active_page === 'shop'  ? 'active' : '' ?>">Shop</a></li>
     <li><a href="https://discord.gg/tgmodz" target="_blank" rel="noopener">Discord</a></li>
-    <li><a href="#">FAQ</a></li>
+    <li><a href="/#faq" class="<?= $active_page === 'faq' ? 'active' : '' ?>">FAQ</a></li>
   </ul>
 
   <div class="nav-right">
@@ -29,7 +29,7 @@ $active_page = $active_page ?? '';
   <a href="/"     class="<?= $active_page === 'home' ? 'active' : '' ?>">Home</a>
   <a href="/shop" class="<?= $active_page === 'shop' ? 'active' : '' ?>">Shop</a>
   <a href="https://discord.gg/tgmodz" target="_blank" rel="noopener">Discord</a>
-  <a href="#">FAQ</a>
+  <a href="/#faq">FAQ</a>
   <div class="mobile-btns">
     <a href="/shop" class="pill pill-blue">Shop Now</a>
   </div>

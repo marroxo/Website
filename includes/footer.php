@@ -22,7 +22,7 @@
         <h4>Support</h4>
         <div class="footer-links">
           <a href="https://discord.gg/tgmodz" target="_blank" rel="noopener">Discord Server</a>
-          <a href="#">FAQ</a>
+          <a href="/#faq">FAQ</a>
           <a href="#">How to Purchase</a>
           <a href="#">Refund Policy</a>
         </div>
@@ -67,6 +67,72 @@
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   els.forEach(function(el){ io.observe(el); });
+})();
+
+// Stat counter animation — only fires for elements with data-target attribute
+(function(){
+  function parseTarget(text) {
+    text = text.trim();
+    var suffix = '';
+    var prefix = '';
+    if (text.charAt(0) === '$') { prefix = '$'; text = text.slice(1); }
+    if (text.slice(-2) === 'K+') { suffix = 'K+'; text = text.slice(0, -2); }
+    else if (text.slice(-1) === '+') { suffix = '+'; text = text.slice(0, -1); }
+    else if (text.slice(-1) === '★') { suffix = '★'; text = text.slice(0, -1); }
+    var num = parseFloat(text);
+    return isNaN(num) ? null : { num: num, prefix: prefix, suffix: suffix };
+  }
+  function animateCounter(el, target, duration) {
+    var t = parseTarget(target);
+    if (!t) return;
+    var isDecimal = (t.num % 1 !== 0);
+    var start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      var ease = 1 - Math.pow(1 - progress, 3);
+      var current = t.num * ease;
+      el.textContent = t.prefix + (isDecimal ? current.toFixed(1) : Math.round(current)) + t.suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  // Only select elements with an explicit data-target — skips non-numeric stats like "24/7" and "Est."
+  var statEls = document.querySelectorAll('[data-target].stat-n, [data-target].hstat-n');
+  if (!statEls.length) return;
+  var io2 = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) {
+        animateCounter(e.target, e.target.getAttribute('data-target'), 1800);
+        io2.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  statEls.forEach(function(el){ io2.observe(el); });
+})();
+
+// FAQ accordion — button references cached at setup to avoid querySelector on every click
+(function(){
+  var items = document.querySelectorAll('.faq-item');
+  if (!items.length) return;
+  var faqPairs = [];
+  items.forEach(function(item){
+    var btn = item.querySelector('.faq-q');
+    if (btn) faqPairs.push({ item: item, btn: btn });
+  });
+  faqPairs.forEach(function(pair){
+    pair.btn.addEventListener('click', function(){
+      var isOpen = pair.item.classList.contains('open');
+      faqPairs.forEach(function(p){
+        p.item.classList.remove('open');
+        p.btn.setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        pair.item.classList.add('open');
+        pair.btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
 })();
 </script>
 </body>
