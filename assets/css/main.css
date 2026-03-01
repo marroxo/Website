@@ -45,6 +45,15 @@
   --radius-lg:  16px;
   --shadow:     0 4px 24px rgba(0,0,0,.5);
   --shadow-lg:  0 16px 48px rgba(0,0,0,.6);
+  /* ── Midnight Galaxy theme (deep purple accent layer) ── */
+  --galaxy-deep:    #2b1e3e;
+  --galaxy-mid:     #4a4e8f;
+  --galaxy-lavender:#a490c2;
+  --galaxy-silver:  #e6e6fa;
+  /* ── Tech Innovation overlays ── */
+  --tech-electric:  #0066ff;
+  --tech-neon:      #00e5ff;
+  --neon-cyan-hi:   0 0 20px rgba(0,229,255,.5), 0 0 60px rgba(0,229,255,.12);
 }
 
 /* ── Reset ───────────────────────────────────────────────────────────────────── */
@@ -139,7 +148,7 @@ body::after {
 .btn-primary {
   background: linear-gradient(135deg, var(--blue), var(--blue-deep));
   color: #fff;
-  box-shadow: var(--neon-blue), inset 0 1px 0 rgba(255,255,255,.15);
+  box-shadow: 0 0 20px rgba(0,102,255,.45), 0 0 60px rgba(0,102,255,.12), inset 0 1px 0 rgba(255,255,255,.15);
   position: relative;
   overflow: hidden;
 }
@@ -156,7 +165,7 @@ body::after {
 .btn-primary:hover {
   background: linear-gradient(135deg, var(--blue-hi), var(--blue));
   transform: translateY(-3px) scale(1.02);
-  box-shadow: var(--neon-blue-lg);
+  box-shadow: 0 0 40px rgba(0,102,255,.6), 0 0 100px rgba(0,102,255,.18);
 }
 .btn-outline {
   background: transparent;
@@ -1312,19 +1321,19 @@ footer {
 }
 .hero-orb-a {
   width: 520px; height: 520px;
-  background: radial-gradient(circle, rgba(59,130,246,.28), transparent 70%);
+  background: radial-gradient(circle, rgba(59,130,246,.3), rgba(74,78,143,.12), transparent 70%);
   top: -120px; left: -80px;
   animation: orb-drift-a 14s ease-in-out infinite;
 }
 .hero-orb-b {
   width: 420px; height: 420px;
-  background: radial-gradient(circle, rgba(6,182,212,.22), transparent 70%);
+  background: radial-gradient(circle, rgba(0,229,255,.2), rgba(6,182,212,.1), transparent 70%);
   top: 30px; right: -60px;
   animation: orb-drift-b 18s ease-in-out infinite;
 }
 .hero-orb-c {
   width: 300px; height: 300px;
-  background: radial-gradient(circle, rgba(168,85,247,.15), transparent 70%);
+  background: radial-gradient(circle, rgba(164,144,194,.2), rgba(168,85,247,.1), transparent 70%);
   bottom: 60px; left: 50%;
   animation: orb-drift-c 22s ease-in-out infinite;
 }
@@ -1484,16 +1493,6 @@ nav#navbar.scrolled {
   position: relative;
   overflow: hidden;
 }
-.feature-hl-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--blue), var(--cyan), transparent);
-  opacity: 0;
-  transition: opacity .3s;
-}
-.feature-hl-card:hover::before { opacity: 1; }
 .feature-hl-card:hover {
   border-color: rgba(59,130,246,.35);
   transform: translateY(-8px);
@@ -1619,4 +1618,235 @@ nav#navbar.scrolled {
   .hero-orb-a { width: 280px; height: 280px; }
   .hero-orb-b { width: 220px; height: 220px; }
   .hero-orb-c { display: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SKILL UPGRADES — theme-factory (Midnight Galaxy + Tech Innovation)
+                  + brand-guidelines (consistency + visual identity)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Shared ticker base (announce bar + live sales ticker) ────────────────── */
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ticker-track-base {
+  display: inline-flex;
+  align-items: center;
+  gap: 2rem;
+  white-space: nowrap;
+  padding: 0 2rem;
+  animation: ticker-scroll linear infinite;
+}
+.ticker-track-base:hover { animation-play-state: paused; }
+
+/* ── Announce bar — scrolling ticker (theme-factory: dynamic content strip) ── */
+.announce {
+  overflow: hidden;
+  padding: 0;
+  height: 32px;
+  display: flex;
+  align-items: center;
+}
+.announce-track {
+  animation-duration: 32s;
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .03em;
+  color: rgba(255,255,255,.95);
+}
+.announce-item { display: inline-flex; align-items: center; gap: .4rem; }
+.announce-sep { color: rgba(255,255,255,.35); font-size: .7rem; }
+.announce-track a { color: #fff; text-decoration: underline; text-underline-offset: 2px; opacity: .9; }
+
+/* ── Live Sales Ticker (theme-factory: social proof activity stream) ───────── */
+.live-ticker {
+  display: flex;
+  align-items: center;
+  background: rgba(10,14,30,.85);
+  border-top: 1px solid rgba(0,229,255,.1);
+  border-bottom: 1px solid rgba(0,229,255,.1);
+  height: 38px;
+  overflow: hidden;
+  position: relative;
+}
+.live-ticker-label {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  padding: 0 1rem 0 5%;
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  color: var(--tech-neon);
+  white-space: nowrap;
+  border-right: 1px solid rgba(0,229,255,.15);
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+.live-ticker-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--tech-neon);
+  box-shadow: 0 0 8px var(--tech-neon);
+  animation: dot-pulse 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.live-ticker-track-wrap {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+.live-ticker-track-wrap::before,
+.live-ticker-track-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 48px;
+  z-index: 2;
+  pointer-events: none;
+}
+.live-ticker-track-wrap::before { left: 0; background: linear-gradient(90deg, rgba(10,14,30,.85), transparent); }
+.live-ticker-track-wrap::after  { right: 0; background: linear-gradient(-90deg, rgba(10,14,30,.85), transparent); }
+.live-ticker-track {
+  animation-duration: 40s;
+}
+.lti {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .75rem;
+  color: var(--text2);
+}
+.lti strong { color: var(--text); font-weight: 600; }
+.lti-icon { font-size: .85rem; }
+.lti-prod { color: var(--blue-hi); font-weight: 600; }
+.lti-time { color: var(--text3); font-size: .68rem; }
+.lti-sep { color: var(--text3); opacity: .4; }
+
+/* ── FAQ Accordion (brand-guidelines: consistent, clean information design) ── */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.faq-item {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--border);
+  transition: background .2s;
+}
+.faq-item:last-child { border-bottom: none; }
+.faq-item.open { background: rgba(14,24,52,.7); }
+.faq-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.35rem 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-size: .95rem;
+  font-weight: 600;
+  transition: color .2s;
+}
+.faq-q:hover { color: var(--blue-hi); }
+.faq-item.open .faq-q { color: var(--blue-hi); }
+.faq-icon {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--text3);
+  flex-shrink: 0;
+  transition: all .3s;
+  line-height: 1;
+}
+.faq-item.open .faq-icon {
+  transform: rotate(45deg);
+  border-color: var(--blue);
+  color: var(--blue-hi);
+  background: var(--blue-dim);
+}
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .4s cubic-bezier(.4,0,.2,1), padding .4s;
+  padding: 0 1.5rem;
+}
+.faq-item.open .faq-a {
+  max-height: 300px;
+  padding: 0 1.5rem 1.35rem;
+}
+.faq-a p {
+  font-size: .875rem;
+  color: var(--text2);
+  line-height: 1.7;
+  font-weight: 300;
+  border-left: 2px solid var(--blue-dim);
+  padding-left: 1rem;
+}
+
+/* ── Tech Innovation: cyan accent glow on prod-pill border ───────────────── */
+.prod-pill {
+  border-color: rgba(0,229,255,.45);
+}
+.prod-pill-icon { color: var(--tech-neon); }
+
+/* ── Midnight Galaxy: subtle lavender shimmer on section headings ─────────── */
+.heading {
+  background: linear-gradient(135deg, var(--text) 60%, var(--galaxy-lavender) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── brand-guidelines: consistent card top-line accent across all cards ────── */
+.feature-hl-card::before,
+.review-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--tech-neon), var(--blue), transparent);
+  opacity: 0;
+  transition: opacity .3s;
+}
+.review-card { position: relative; overflow: hidden; }
+.feature-hl-card:hover::before,
+.review-card:hover::before { opacity: .8; }
+
+/* ── Stat counter animation (brand-guidelines: impactful metric display) ───── */
+.stat-n, .hstat-n {
+  transition: text-shadow .3s;
+}
+
+/* ── FAQ staggered reveal delays (replaces inline style attrs) ───────────────── */
+.faq-item.reveal:nth-child(1) { transition-delay: 0s; }
+.faq-item.reveal:nth-child(2) { transition-delay: .05s; }
+.faq-item.reveal:nth-child(3) { transition-delay: .10s; }
+.faq-item.reveal:nth-child(4) { transition-delay: .15s; }
+.faq-item.reveal:nth-child(5) { transition-delay: .20s; }
+.faq-item.reveal:nth-child(6) { transition-delay: .25s; }
+
+/* ── Responsive for new components ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .live-ticker-label { padding: 0 .75rem 0 1rem; font-size: .56rem; }
+  .lti { font-size: .7rem; }
+  .faq-q { font-size: .875rem; padding: 1.1rem 1.1rem; }
+  .faq-a { padding: 0 1.1rem; }
+  .faq-item.open .faq-a { padding: 0 1.1rem 1.1rem; }
 }

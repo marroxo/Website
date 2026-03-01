@@ -76,11 +76,11 @@ include __DIR__ . '/includes/nav.php';
 
   <div class="hero-stats">
     <div class="hstat">
-      <div class="hstat-n">100K+</div>
+      <div class="hstat-n" data-target="100K+">100K+</div>
       <div class="hstat-l">Customers</div>
     </div>
     <div class="hstat">
-      <div class="hstat-n">4.8★</div>
+      <div class="hstat-n" data-target="4.8★">4.8★</div>
       <div class="hstat-l">Trustpilot</div>
     </div>
     <div class="hstat">
@@ -120,6 +120,42 @@ include __DIR__ . '/includes/nav.php';
     <div class="ti">
       <div class="ti-icon">🔄</div>
       <span><strong>Regular Updates</strong> — Always undetected</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── LIVE SALES TICKER ──────────────────────────────────────────────────── -->
+<div class="live-ticker" aria-label="Recent sales activity">
+  <div class="live-ticker-label">
+    <span class="live-ticker-dot"></span>
+    LIVE
+  </div>
+  <div class="live-ticker-track-wrap">
+    <div class="live-ticker-track ticker-track-base">
+      <span class="lti"><span class="lti-icon">🎯</span> <strong>xSniperKing</strong> purchased <span class="lti-prod">Neverlose CS2</span> <span class="lti-time">2m ago</span></span>
+      <span class="lti-sep">·</span>
+      <span class="lti"><span class="lti-icon">🏎️</span> <strong>GTA_Legend99</strong> purchased <span class="lti-prod">Cherax GTA5</span> <span class="lti-time">5m ago</span></span>
+      <span class="lti-sep">·</span>
+      <span class="lti"><span class="lti-icon">🛡️</span> <strong>SpooferPro</strong> purchased <span class="lti-prod">Ethereal Spoofer</span> <span class="lti-time">8m ago</span></span>
+      <span class="lti-sep">·</span>
+      <span class="lti"><span class="lti-icon">🌐</span> <strong>FiveM_King</strong> purchased <span class="lti-prod">Susano FiveM</span> <span class="lti-time">11m ago</span></span>
+      <span class="lti-sep">·</span>
+      <span class="lti"><span class="lti-icon">🤖</span> <strong>ArcPlayer</strong> purchased <span class="lti-prod">Kernaim ARC Raiders</span> <span class="lti-time">14m ago</span></span>
+      <span class="lti-sep">·</span>
+      <span class="lti"><span class="lti-icon">🎯</span> <strong>HeadshotOnly</strong> purchased <span class="lti-prod">Neverlose CS2</span> <span class="lti-time">17m ago</span></span>
+      <span class="lti-sep">·</span>
+      <span class="lti"><span class="lti-icon">🏎️</span> <strong>GodMode_GTA</strong> purchased <span class="lti-prod">Cherax GTA5</span> <span class="lti-time">21m ago</span></span>
+      <span class="lti-sep">·</span>
+      <!-- Duplicate for seamless loop -->
+      <span class="lti"><span class="lti-icon">🎯</span> <strong>xSniperKing</strong> purchased <span class="lti-prod">Neverlose CS2</span> <span class="lti-time">2m ago</span></span>
+      <span class="lti-sep">·</span>
+      <span class="lti"><span class="lti-icon">🏎️</span> <strong>GTA_Legend99</strong> purchased <span class="lti-prod">Cherax GTA5</span> <span class="lti-time">5m ago</span></span>
+      <span class="lti-sep">·</span>
+      <span class="lti"><span class="lti-icon">🛡️</span> <strong>SpooferPro</strong> purchased <span class="lti-prod">Ethereal Spoofer</span> <span class="lti-time">8m ago</span></span>
+      <span class="lti-sep">·</span>
+      <span class="lti"><span class="lti-icon">🌐</span> <strong>FiveM_King</strong> purchased <span class="lti-prod">Susano FiveM</span> <span class="lti-time">11m ago</span></span>
+      <span class="lti-sep">·</span>
+      <span class="lti"><span class="lti-icon">🤖</span> <strong>ArcPlayer</strong> purchased <span class="lti-prod">Kernaim ARC Raiders</span> <span class="lti-time">14m ago</span></span>
     </div>
   </div>
 </div>
@@ -322,19 +358,97 @@ include __DIR__ . '/includes/nav.php';
   </div>
 </section>
 
+<!-- ─── FAQ ─────────────────────────────────────────────────────────────────── -->
+<section id="faq" class="section" style="padding-top:60px;padding-bottom:60px;">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div>
+        <div class="tag">Got Questions?</div>
+        <h2 class="heading">FREQUENTLY ASKED</h2>
+        <p class="subtext" style="margin-top:.5rem">Everything you need to know before purchasing.</p>
+      </div>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">
+          <span>Is TGModz an authorized reseller?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Yes. TGModz is an officially authorized reseller for every product in our catalogue. We work directly with developers to offer genuine licenses at competitive prices — you're never buying from an untrusted third party.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">
+          <span>How quickly do I receive my license after purchase?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Instantly. License keys and download links are delivered to your email and Discord within seconds of payment confirmation. No manual processing, no delays — automated 24/7.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">
+          <span>Are the products undetected by anti-cheat?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>All products in our catalogue are actively monitored and updated around the clock. We only list software that passes our internal testing and verification. When an anti-cheat update drops, developers push fixes rapidly — your subscription always gets the latest safe build.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">
+          <span>What payment methods do you accept?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>We accept Visa, Mastercard, PayPal, Bitcoin, Ethereum, and Litecoin. All transactions are encrypted — your payment information is never stored or shared.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">
+          <span>What happens if a product goes detected?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Our team monitors all products continuously. In the rare event a product is temporarily detected, the developers issue a patch rapidly. Your subscription is automatically extended for any downtime exceeding 48 hours. Contact our Discord support team for any concerns.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">
+          <span>Do you offer refunds?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Yes — we offer refunds on a case-by-case basis. If a product doesn't work as advertised, contact our Discord support team within 24 hours of purchase. Refunds are typically processed within 1–3 business days. Note: refunds are not available after a license has been activated.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
 <!-- ─── STATS ─────────────────────────────────────────────────────────────── -->
 <div class="stats-bar">
   <div class="stats-inner">
     <div class="stat-box">
-      <div class="stat-n">100K+</div>
+      <div class="stat-n" data-target="100K+">100K+</div>
       <div class="stat-l">Happy Customers</div>
     </div>
     <div class="stat-box">
-      <div class="stat-n">50+</div>
+      <div class="stat-n" data-target="50+">50+</div>
       <div class="stat-l">Products Listed</div>
     </div>
     <div class="stat-box">
-      <div class="stat-n">4.8★</div>
+      <div class="stat-n" data-target="4.8★">4.8★</div>
       <div class="stat-l">Trustpilot Rating</div>
     </div>
     <div class="stat-box">

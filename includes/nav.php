@@ -1,8 +1,26 @@
 <?php
 $active_page = $active_page ?? '';
 ?>
-<div class="announce">
-  🎮 New products added weekly — <a href="/shop">Browse the full catalogue →</a>
+<div class="announce" aria-label="Announcements">
+  <!-- Items intentionally duplicated for seamless CSS marquee loop (translateX -50%) -->
+  <div class="announce-track ticker-track-base">
+    <span class="announce-item">🎮 New products added weekly — <a href="/shop">Browse the full catalogue →</a></span>
+    <span class="announce-sep">·</span>
+    <span class="announce-item">⚡ Instant delivery on all orders — license keys sent within seconds</span>
+    <span class="announce-sep">·</span>
+    <span class="announce-item">🛡️ All products verified undetected — <a href="/shop">Shop now →</a></span>
+    <span class="announce-sep">·</span>
+    <span class="announce-item">💬 24/7 Discord support — join <a href="https://discord.gg/tgmodz" target="_blank" rel="noopener">our server →</a></span>
+    <span class="announce-sep">·</span>
+    <!-- Duplicate set — seamless loop -->
+    <span class="announce-item">🎮 New products added weekly — <a href="/shop">Browse the full catalogue →</a></span>
+    <span class="announce-sep">·</span>
+    <span class="announce-item">⚡ Instant delivery on all orders — license keys sent within seconds</span>
+    <span class="announce-sep">·</span>
+    <span class="announce-item">🛡️ All products verified undetected — <a href="/shop">Shop now →</a></span>
+    <span class="announce-sep">·</span>
+    <span class="announce-item">💬 24/7 Discord support — join <a href="https://discord.gg/tgmodz" target="_blank" rel="noopener">our server →</a></span>
+  </div>
 </div>
 
 <nav id="navbar">
@@ -12,7 +30,7 @@ $active_page = $active_page ?? '';
     <li><a href="/"     class="<?= $active_page === 'home'  ? 'active' : '' ?>">Home</a></li>
     <li><a href="/shop" class="<?= $active_page === 'shop'  ? 'active' : '' ?>">Shop</a></li>
     <li><a href="https://discord.gg/tgmodz" target="_blank" rel="noopener">Discord</a></li>
-    <li><a href="#">FAQ</a></li>
+    <li><a href="/#faq" class="<?= $active_page === 'faq' ? 'active' : '' ?>">FAQ</a></li>
   </ul>
 
   <div class="nav-right">
@@ -29,7 +47,7 @@ $active_page = $active_page ?? '';
   <a href="/"     class="<?= $active_page === 'home' ? 'active' : '' ?>">Home</a>
   <a href="/shop" class="<?= $active_page === 'shop' ? 'active' : '' ?>">Shop</a>
   <a href="https://discord.gg/tgmodz" target="_blank" rel="noopener">Discord</a>
-  <a href="#">FAQ</a>
+  <a href="/#faq">FAQ</a>
   <div class="mobile-btns">
     <a href="/shop" class="pill pill-blue">Shop Now</a>
   </div>
