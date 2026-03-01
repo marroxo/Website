@@ -9,10 +9,10 @@ $active_page = $active_page ?? '';
   <a href="/" class="nav-logo">TG<em>MODZ</em><span class="nav-logo-badge">Est. 2021</span></a>
 
   <ul class="nav-links">
-    <li><a href="/"     class="<?= $active_page === 'home'  ? 'active' : '' ?>">Home</a></li>
-    <li><a href="/shop" class="<?= $active_page === 'shop'  ? 'active' : '' ?>">Shop</a></li>
+    <li><a href="/"     class="<?= $active_page === 'home' ? 'active' : '' ?>">Home</a></li>
+    <li><a href="/shop" class="<?= $active_page === 'shop' ? 'active' : '' ?>">Shop</a></li>
     <li><a href="https://discord.gg/tgmodz" target="_blank" rel="noopener">Discord</a></li>
-    <li><a href="/#faq" class="<?= $active_page === 'faq' ? 'active' : '' ?>">FAQ</a></li>
+    <li><a href="/#faq" class="<?= $active_page === 'faq'  ? 'active' : '' ?>">FAQ</a></li>
   </ul>
 
   <div class="nav-right">
@@ -50,16 +50,12 @@ $active_page = $active_page ?? '';
     }
   });
 
-  // Scroll-activated navbar glassmorphism
-  var lastY = 0;
   window.addEventListener('scroll', function(){
-    var y = window.scrollY;
-    if (y > 40) {
+    if (window.scrollY > 40) {
       navbar.classList.add('scrolled');
     } else {
       navbar.classList.remove('scrolled');
     }
-    lastY = y;
   }, { passive: true });
 })();
 </script>

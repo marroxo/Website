@@ -4,7 +4,7 @@
 
       <div class="footer-brand">
         <div class="footer-logo">TG<em>MODZ</em></div>
-        <p class="footer-tagline">Your trusted authorized reseller of premium gaming software since 2021. Instant delivery, verified products, 100k+ happy customers.</p>
+        <p class="footer-tagline">Authorized reseller of premium gaming software since 2021. Instant delivery, verified products, 100K+ happy customers.</p>
       </div>
 
       <div class="footer-col">
@@ -40,7 +40,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p class="footer-copy">© <?= date('Y') ?> TGModz. All rights reserved. TGModz is an authorized reseller.</p>
+      <p class="footer-copy">© <?= date('Y') ?> TGModz. All rights reserved. Authorized reseller.</p>
       <div class="footer-payments">
         <span class="payment-badge">Visa</span>
         <span class="payment-badge">Mastercard</span>
@@ -65,16 +65,15 @@
         io.unobserve(e.target);
       }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
   els.forEach(function(el){ io.observe(el); });
 })();
 
-// Stat counter animation — only fires for elements with data-target attribute
+// Stat counter animation
 (function(){
   function parseTarget(text) {
     text = text.trim();
-    var suffix = '';
-    var prefix = '';
+    var suffix = '', prefix = '';
     if (text.charAt(0) === '$') { prefix = '$'; text = text.slice(1); }
     if (text.slice(-2) === 'K+') { suffix = 'K+'; text = text.slice(0, -2); }
     else if (text.slice(-1) === '+') { suffix = '+'; text = text.slice(0, -1); }
@@ -97,7 +96,6 @@
     }
     requestAnimationFrame(step);
   }
-  // Only select elements with an explicit data-target — skips non-numeric stats like "24/7" and "Est."
   var statEls = document.querySelectorAll('[data-target].stat-n, [data-target].hstat-n');
   if (!statEls.length) return;
   var io2 = new IntersectionObserver(function(entries){
@@ -111,19 +109,19 @@
   statEls.forEach(function(el){ io2.observe(el); });
 })();
 
-// FAQ accordion — button references cached at setup to avoid querySelector on every click
+// FAQ accordion
 (function(){
   var items = document.querySelectorAll('.faq-item');
   if (!items.length) return;
-  var faqPairs = [];
+  var pairs = [];
   items.forEach(function(item){
     var btn = item.querySelector('.faq-q');
-    if (btn) faqPairs.push({ item: item, btn: btn });
+    if (btn) pairs.push({ item: item, btn: btn });
   });
-  faqPairs.forEach(function(pair){
+  pairs.forEach(function(pair){
     pair.btn.addEventListener('click', function(){
       var isOpen = pair.item.classList.contains('open');
-      faqPairs.forEach(function(p){
+      pairs.forEach(function(p){
         p.item.classList.remove('open');
         p.btn.setAttribute('aria-expanded', 'false');
       });
