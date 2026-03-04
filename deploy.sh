@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 # ─────────────────────────────────────────────────────────────────────────────
-#  TGModz deploy script
+#  TCD deploy script
 #  Usage:  bash ~/deploy.sh
-#  Alias:  add to ~/.bashrc → alias w='bash ~/deploy.sh'
 # ─────────────────────────────────────────────────────────────────────────────
 
 set -e
@@ -10,13 +9,13 @@ set -e
 REPO="https://github.com/marroxo/Website.git"
 BRANCH="main"
 DIR="$HOME/w"
-PM2_NAME="tgmodz"
-PORT="${PORT:-3001}"
+PM2_NAME="tcd"
+PORT="${PORT:-3100}"
 GH_TOKEN_FILE="$HOME/.tgmodz_ghtoken"
 
 echo ""
 echo "  ╔══════════════════════════════╗"
-echo "  ║   TGModz — Deploy Script     ║"
+echo "  ║     TCD — Deploy Script      ║"
 echo "  ╚══════════════════════════════╝"
 echo ""
 
@@ -79,20 +78,11 @@ fi
 PORT=$PORT pm2 start php \
   --name "$PM2_NAME" \
   --interpreter none \
-  -- -S "0.0.0.0:$PORT" router.php
+  -- -S "0.0.0.0:$PORT" -t .
 
 pm2 save --force
 
 echo ""
-echo "  ✓  TGModz is live!"
-echo "     http://45.11.229.217:$PORT"
-echo ""
-echo "  Routes:"
-echo "     http://45.11.229.217:$PORT/          → Homepage"
-echo "     http://45.11.229.217:$PORT/shop       → Shop"
-echo "     http://45.11.229.217:$PORT/product/neverlose-cs2"
-echo "     http://45.11.229.217:$PORT/product/cherax-gta5"
-echo "     http://45.11.229.217:$PORT/product/susano-fivem"
-echo "     http://45.11.229.217:$PORT/product/ethereal-spoofer"
-echo "     http://45.11.229.217:$PORT/product/kernaim-arc-raiders"
+echo "  ✓  TCD is live!"
+echo "     http://45.11.227.219:$PORT"
 echo ""
