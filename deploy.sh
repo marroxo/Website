@@ -84,5 +84,5 @@ pm2 save --force
 
 echo ""
 echo "  ✓  TCD is live!"
-echo "     http://45.11.227.219:$PORT"
+echo "     http://45.11.229.217:$PORT"
 echo ""
